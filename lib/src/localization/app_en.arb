@@ -1,0 +1,6 @@
+{
+  "appTitle": "wheel_auction",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
