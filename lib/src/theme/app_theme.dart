@@ -15,6 +15,7 @@ class MyThemes {
   static const _defaultFontFamily = 'Roboto';
   static final darkTheme = ThemeData(
     primaryColor: Colors.black,
+    primaryColorLight: Colors.grey.shade800,
     scaffoldBackgroundColor: Colors.grey.shade900,
     colorScheme: const ColorScheme.dark(),
     fontFamily: _defaultFontFamily,
@@ -25,6 +26,7 @@ class MyThemes {
   );
   static final lightTheme = ThemeData(
     primaryColor: Colors.white,
+    primaryColorLight: Colors.white,
     scaffoldBackgroundColor: Colors.white,
     colorScheme: const ColorScheme.light(),
     fontFamily: _defaultFontFamily,
