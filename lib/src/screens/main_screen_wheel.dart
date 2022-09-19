@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../theme/app_theme.dart';
+import '../widgets/change_theme_button_widget.dart';
+import '../widgets/settings_of_wheel_button.dart';
 import 'add_wheel_screen.dart';
-import 'settings_of_wheel.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -12,10 +12,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final text =
-    //     Provider.of<ThemeProvider>(context).selectedThemeMode == ThemeMode.dark
-    //         ? 'DarkTheme'
-    //         : 'LightTheme';
     return Scaffold(
       body: Column(
         children: [
@@ -88,16 +84,11 @@ class __CenterWidgetState extends State<_CenterWidget> {
   }
 }
 
-class _BottomWidget extends StatefulWidget {
+class _BottomWidget extends StatelessWidget {
   const _BottomWidget({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<_BottomWidget> createState() => _BottomWidgetState();
-}
-
-class _BottomWidgetState extends State<_BottomWidget> {
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.bodyText2;
@@ -124,13 +115,7 @@ class _BottomWidgetState extends State<_BottomWidget> {
             flex: 1,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.restorablePushNamed(
-                      context, SettingsOfWheel.routeName);
-                },
-                icon: const Icon(Icons.menu_sharp),
-              ),
+              child: SettingsOfWheelButton(),
             ),
           )
         ],
@@ -138,48 +123,3 @@ class _BottomWidgetState extends State<_BottomWidget> {
     );
   }
 }
-
-class ChangeThemeButtonWidget extends StatefulWidget {
-  const ChangeThemeButtonWidget({Key? key}) : super(key: key);
-
-  @override
-  State<ChangeThemeButtonWidget> createState() =>
-      _ChangeThemeButtonWidgetState();
-}
-
-class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
-  @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    var isDark = themeProvider.isDarkMode;
-    return IconButton(
-      onPressed: () {
-        final newMode = !isDark;
-        setState(() => isDark = newMode);
-        //
-
-        final provider = Provider.of<ThemeProvider>(context, listen: false);
-        provider.toggleTheme(isDark);
-      },
-      icon: Icon(
-        isDark ? Icons.sunny : Icons.nightlight_round,
-      ),
-    );
-  }
-}
-
-// class ChangeThemeButtonWidget extends StatelessWidget {
-//   const ChangeThemeButtonWidget({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final themeProvider = Provider.of<ThemeProvider>(context);
-//     return Switch.adaptive(
-//       value: themeProvider.isDarkMode,
-//       onChanged: (value) {
-//         final provider = Provider.of<ThemeProvider>(context, listen: false);
-//         provider.toggleTheme(value);
-//       },
-//     );
-//   }
-// }
