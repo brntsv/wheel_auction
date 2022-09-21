@@ -17,6 +17,7 @@ class MyThemes {
     primaryColor: Colors.black,
     primaryColorLight: Colors.grey.shade800,
     scaffoldBackgroundColor: Colors.grey.shade900,
+    cardColor: Colors.grey.shade900,
     colorScheme: const ColorScheme.dark(),
     fontFamily: _defaultFontFamily,
     textTheme: const TextTheme(
@@ -28,6 +29,7 @@ class MyThemes {
     primaryColor: Colors.white,
     primaryColorLight: Colors.white,
     scaffoldBackgroundColor: Colors.white,
+    cardColor: Colors.grey.shade200,
     colorScheme: const ColorScheme.light(),
     fontFamily: _defaultFontFamily,
     textTheme: const TextTheme(
