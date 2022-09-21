@@ -10,7 +10,9 @@ class SettingsOfWheelButton extends StatefulWidget {
 }
 
 class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
-  bool _value = true;
+  bool _isSwitched = true;
+  double _currentSliderValue = 20;
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -31,70 +33,114 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                   color: Theme.of(context).primaryColorLight,
                   borderRadius: BorderRadius.circular(40),
                 ),
-                child: Dialog(
-                  insetPadding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                  elevation: 0,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                child: StatefulBuilder(
+                  builder: (context, setState) => Dialog(
+                    insetPadding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 24),
+                    elevation: 0,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            color: Theme.of(context).cardColor,
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(15),
+                              splashColor: Colors.white.withAlpha(30),
+                              onTap: () {},
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 5),
+                                child: Row(
+                                  children: [
+                                    const Text('Режим на выбывание'),
+                                    const Spacer(),
+                                    Switch(
+                                        value: _isSwitched,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            _isSwitched = newValue;
+                                          });
+                                        }),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(15),
-                            splashColor: Colors.white.withAlpha(30),
-                            onTap: () {},
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 100,
+                          child: Card(
+                            color: Theme.of(context).cardColor,
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20, right: 5),
-                              child: Row(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 5, top: 20),
+                              child: Column(
                                 children: [
-                                  const Text('Режим на выбывание'),
-                                  const Spacer(),
-                                  Switch.adaptive(
-                                      value: _value,
-                                      onChanged: (newValue) {
-                                        _value = newValue;
-                                      }),
+                                  Row(
+                                    children: const [
+                                      Text('Длительность вращения'),
+                                      Spacer(),
+                                    ],
+                                  ),
+                                  Slider(
+                                    value: _currentSliderValue,
+                                    max: 60,
+                                    divisions: 60,
+                                    label:
+                                        _currentSliderValue.round().toString(),
+                                    onChanged: (double value) {
+                                      setState(() {
+                                        _currentSliderValue = value;
+                                      });
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(15),
-                            splashColor: Colors.white.withAlpha(30),
-                            onTap: () {
-                              Navigator.restorablePushNamed(
-                                  context, SettingsOfWheelGlobal.routeName);
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20, right: 5),
-                              child: Row(
-                                children: const [
-                                  Text('Редактировать колесо'),
-                                  Spacer(),
-                                  Icon(Icons.keyboard_arrow_right)
-                                ],
+                        SizedBox(
+                          width: double.infinity,
+                          height: 55,
+                          child: Card(
+                            color: Theme.of(context).cardColor,
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(15),
+                              splashColor: Colors.white.withAlpha(30),
+                              onTap: () {
+                                Navigator.restorablePushNamed(
+                                    context, SettingsOfWheelGlobal.routeName);
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 5),
+                                child: Row(
+                                  children: const [
+                                    Text('Редактировать колесо'),
+                                    Spacer(),
+                                    Icon(Icons.keyboard_arrow_right)
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
