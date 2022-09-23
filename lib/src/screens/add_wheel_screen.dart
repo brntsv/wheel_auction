@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../settings/settings_controller.dart';
+import 'global_settings_screen.dart';
 
 class AddWheelScreen extends StatelessWidget {
   const AddWheelScreen({Key? key, required this.controller}) : super(key: key);
 
-  static const routeName = '/settings';
+  static const routeName = '/add_wheel';
 
   final SettingsController controller;
 
@@ -13,29 +14,51 @@ class AddWheelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('Добавить колесо'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(16),
-      //   child: DropdownButton<ThemeMode>(
-      //     value: controller.themeMode,
-      //     onChanged: controller.updateThemeMode,
-      //     items: const [
-      //       DropdownMenuItem(
-      //         value: ThemeMode.system,
-      //         child: Text('System Theme'),
-      //       ),
-      //       DropdownMenuItem(
-      //         value: ThemeMode.light,
-      //         child: Text('Light Theme'),
-      //       ),
-      //       DropdownMenuItem(
-      //         value: ThemeMode.dark,
-      //         child: Text('Dark Theme'),
-      //       )
-      //     ],
-      //   ),
-      // ),
+      body: Container(
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, left: 20, right: 20, bottom: 10),
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                  labelText: 'Название',
+                  filled: true,
+                  fillColor: Theme.of(context).primaryColorLight,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.restorablePushNamed(
+                    context, GlobalSettingsWheel.routeName);
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll<Color>(
+                    Theme.of(context).primaryColor),
+                minimumSize: MaterialStateProperty.all(const Size(200, 40)),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ),
+              child: Text(
+                'Настройки',
+                style: Theme.of(context).textTheme.button,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
