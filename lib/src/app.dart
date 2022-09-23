@@ -4,8 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/add_wheel_screen.dart';
+import 'screens/global_settings_screen.dart';
 import 'screens/main_screen_wheel.dart';
-import 'screens/settings_of_wheel.dart';
+import 'screens/settings_of_chosen_wheel.dart';
 import 'settings/settings_controller.dart';
 import 'theme/app_theme.dart';
 
@@ -53,8 +54,10 @@ class App extends StatelessWidget {
                     switch (routeSettings.name) {
                       case AddWheelScreen.routeName:
                         return AddWheelScreen(controller: settingsController);
-                      case SettingsOfWheel.routeName:
-                        return const SettingsOfWheel();
+                      case GlobalSettingsWheel.routeName:
+                        return GlobalSettingsWheel();
+                      case SettingsOfChosenWheel.routeName:
+                        return const SettingsOfChosenWheel();
                       case MainScreen.routeName:
                       default:
                         return const MainScreen();
