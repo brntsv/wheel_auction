@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/settings_of_wheel.dart';
+import '../screens/settings_of_chosen_wheel.dart';
 
 class SettingsOfWheelButton extends StatefulWidget {
   SettingsOfWheelButton({Key? key}) : super(key: key);
@@ -30,11 +30,12 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                 height: 600,
                 margin: const EdgeInsets.only(bottom: 50, left: 50, right: 16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColorLight,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: StatefulBuilder(
                   builder: (context, setState) => Dialog(
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     insetPadding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 24),
                     elevation: 0,
@@ -43,7 +44,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                         SizedBox(
                           width: double.infinity,
                           child: Card(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context).primaryColorLight,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -60,12 +61,15 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                     const Text('Режим на выбывание'),
                                     const Spacer(),
                                     Switch(
-                                        value: _isSwitched,
-                                        onChanged: (newValue) {
-                                          setState(() {
-                                            _isSwitched = newValue;
-                                          });
-                                        }),
+                                      value: _isSwitched,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _isSwitched = newValue;
+                                        });
+                                      },
+                                      activeTrackColor: Theme.of(context)
+                                          .toggleableActiveColor,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -76,7 +80,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                           width: double.infinity,
                           height: 100,
                           child: Card(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context).primaryColorLight,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -103,6 +107,37 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                         _currentSliderValue = value;
                                       });
                                     },
+                                    activeColor:
+                                        Theme.of(context).toggleableActiveColor,
+                                    thumbColor:
+                                        Theme.of(context).toggleableActiveColor,
+                                    inactiveColor: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 100,
+                          child: Card(
+                            color: Theme.of(context).primaryColorLight,
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 5, top: 20),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Text('Стиль колеса'),
+                                      Spacer(),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -113,7 +148,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                           width: double.infinity,
                           height: 55,
                           child: Card(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context).primaryColorLight,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -123,7 +158,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                               splashColor: Colors.white.withAlpha(30),
                               onTap: () {
                                 Navigator.restorablePushNamed(
-                                    context, SettingsOfWheelGlobal.routeName);
+                                    context, SettingsOfChosenWheel.routeName);
                               },
                               child: Padding(
                                 padding:
