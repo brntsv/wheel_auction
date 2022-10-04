@@ -30,12 +30,12 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                 height: 600,
                 margin: const EdgeInsets.only(bottom: 50, left: 50, right: 16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor,
+                  color: Theme.of(context).primaryColorDark,
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: StatefulBuilder(
                   builder: (context, setState) => Dialog(
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    backgroundColor: Theme.of(context).primaryColorDark,
                     insetPadding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 24),
                     elevation: 0,
@@ -44,7 +44,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                         SizedBox(
                           width: double.infinity,
                           child: Card(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Theme.of(context).cardColor,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -80,7 +80,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                           width: double.infinity,
                           height: 100,
                           child: Card(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Theme.of(context).cardColor,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -111,8 +111,8 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                         Theme.of(context).toggleableActiveColor,
                                     thumbColor:
                                         Theme.of(context).toggleableActiveColor,
-                                    inactiveColor: Theme.of(context)
-                                        .scaffoldBackgroundColor,
+                                    inactiveColor:
+                                        Theme.of(context).primaryColorDark,
                                   ),
                                 ],
                               ),
@@ -123,7 +123,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                           width: double.infinity,
                           height: 100,
                           child: Card(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Theme.of(context).cardColor,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -148,7 +148,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                           width: double.infinity,
                           height: 55,
                           child: Card(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Theme.of(context).cardColor,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
