@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/change_theme_button_widget.dart';
+import '../widgets/list_of_wheels_button.dart';
 import '../widgets/settings_of_wheel_button.dart';
 import 'add_wheel_screen.dart';
 
@@ -29,7 +30,6 @@ class _TopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText2;
     return SafeArea(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,13 +41,7 @@ class _TopWidget extends StatelessWidget {
           Flexible(
             flex: 4,
             fit: FlexFit.tight,
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                'NameWheelButton',
-                style: textStyle,
-              ),
-            ),
+            child: ListOfWheelsButton(),
           ),
           Flexible(
             flex: 1,
