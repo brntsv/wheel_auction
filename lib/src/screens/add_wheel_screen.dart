@@ -62,6 +62,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
         );
       },
     );
+
+    _focusNodes[index + 1].requestFocus();
   }
 
   _removeAtIndex(int index) {
@@ -102,14 +104,11 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
           foregroundColor:
               Theme.of(context).floatingActionButtonTheme.foregroundColor,
           onPressed: () {
-            setState(() {
-              _insert();
-            });
+            _insert();
           },
           child: const Icon(Icons.add),
         ),
-        body: Container(
-          alignment: Alignment.center,
+        body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -151,60 +150,49 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                   style: Theme.of(context).textTheme.button,
                 ),
               ),
-              Expanded(
-                child: AnimatedList(
-                  key: _listKey,
-                  initialItemCount: _data.length,
-                  controller: _scrollController,
-                  itemBuilder: ((context, index, animation) {
-                    return SlideTransition(
-                      position: animation.drive(Tween<Offset>(
-                        begin: const Offset(-1.0, 0.0),
-                        end: const Offset(0.0, 0.0),
-                      )),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: TextFormField(
-                          // controller: controller,
-                          autofocus: index == 0,
-                          focusNode: _focusNodes[index],
-                          // textInputAction: TextInputAction.next,
-                          onChanged: (text) {
-                            if (index < _data.length) {
-                              if (text.isEmpty) {
-                                _focusNodes[index - 1].requestFocus();
-                              } else {
-                                _focusNodes[index + 1].requestFocus();
-                              }
-                            }
-                            //тут три бага, переписать.
-                            //нужно выяснить как поставить delay на ввод текста
-                            //еще тут remove удаляет value соседнего элемента
-                            //если в последнем поле удалить последний символ, краш
-                          },
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                onPressed: (() => _removeAtIndex(index)),
-                                icon: const Icon(Icons.delete)),
-                            border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            focusedBorder: OutlineInputBorder(
+              AnimatedList(
+                key: _listKey,
+                initialItemCount: _data.length,
+                controller: _scrollController,
+                primary: false,
+                shrinkWrap: true,
+                itemBuilder: ((context, index, animation) {
+                  return SlideTransition(
+                    position: animation.drive(Tween<Offset>(
+                      begin: const Offset(-1.0, 0.0),
+                      end: const Offset(0.0, 0.0),
+                    )),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: TextFormField(
+                        // controller: controller,
+                        autofocus: true,
+                        focusNode: _focusNodes[index],
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (value) {
+                          _focusNodes[index + 1].requestFocus();
+                        },
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                              onPressed: (() => _removeAtIndex(index)),
+                              icon: const Icon(Icons.delete)),
+                          border: const OutlineInputBorder(
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
-                              borderSide: BorderSide(
-                                  width: 2,
-                                  color: Theme.of(context).focusColor),
-                            ),
-                            hintText: 'Название варианта',
-                            filled: true,
-                            fillColor: Theme.of(context).primaryColorLight,
+                                  BorderRadius.all(Radius.circular(15))),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(15)),
+                            borderSide: BorderSide(
+                                width: 2, color: Theme.of(context).focusColor),
                           ),
+                          hintText: 'Название варианта',
+                          filled: true,
+                          fillColor: Theme.of(context).primaryColorLight,
                         ),
                       ),
-                    );
-                  }),
-                ),
+                    ),
+                  );
+                }),
               )
             ],
           ),
