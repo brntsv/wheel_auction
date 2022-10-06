@@ -52,7 +52,15 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                             child: InkWell(
                               borderRadius: BorderRadius.circular(15),
                               splashColor: Colors.white.withAlpha(30),
-                              onTap: () {},
+                              onTap: () {
+                                setState(() {
+                                  if (_isSwitched == true) {
+                                    _isSwitched = false;
+                                  } else if (_isSwitched == false) {
+                                    _isSwitched = true;
+                                  }
+                                });
+                              },
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(left: 20, right: 5),
