@@ -13,7 +13,7 @@ class _ListOfWheelsButtonState extends State<ListOfWheelsButton> {
     return TextButton(
       onPressed: () {
         showGeneralDialog(
-          barrierLabel: "Label",
+          barrierLabel: "Мои колеса",
           barrierDismissible: true,
           barrierColor: Colors.black.withOpacity(0.2),
           transitionDuration: const Duration(milliseconds: 250),
@@ -32,10 +32,55 @@ class _ListOfWheelsButtonState extends State<ListOfWheelsButton> {
                   builder: (context, setState) => Dialog(
                     backgroundColor: Theme.of(context).primaryColorDark,
                     insetPadding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 24),
+                        horizontal: 24, vertical: 20),
                     elevation: 0,
-                    child: Column(
-                      children: [],
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text('Мои колеса'),
+                          ),
+                          ListView.builder(
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount:
+                                6, //сюда массив передать сформированного листа
+                            itemBuilder: ((context, index) {
+                              return Card(
+                                color: Theme.of(context).cardColor,
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(15),
+                                  splashColor: Colors.white.withAlpha(30),
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 5),
+                                    child: Row(
+                                      children: [
+                                        const Text('Название варианта'),
+                                        const Spacer(),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_right),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
