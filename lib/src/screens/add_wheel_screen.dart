@@ -21,12 +21,22 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   final _data = [];
   final _focusNodes = List.generate(100, (index) => FocusNode());
   //ограничение в 100 элементов. Если добавить больше 100 вариантов, будет crash
+  // late final TextEditingController controllerTextField;
+  final List<TextEditingController> controllerTextField =
+      List.generate(100, (index) => TextEditingController());
+
+  final List<String> wheelInit = [];
 
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    // controllerTextField = TextEditingController();
+
+    for (final TextEditingController field in controllerTextField) {
+      field.addListener(() {});
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _insert();
@@ -35,7 +45,9 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
   @override
   void dispose() {
-    // controller.dispose();
+    for (final TextEditingController field in controllerTextField) {
+      field.dispose();
+    }
 
     for (final FocusNode node in _focusNodes) {
       node.dispose();
@@ -49,16 +61,16 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
     final index = _data.length - 1;
     _listKey.currentState?.insertItem(
       index,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
     );
 
     Timer(
-      const Duration(milliseconds: 220),
+      const Duration(milliseconds: 500),
       () {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
           duration: const Duration(milliseconds: 500),
-          curve: Curves.ease,
+          curve: Curves.easeOutQuart,
         );
       },
     );
@@ -109,6 +121,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
           child: const Icon(Icons.add),
         ),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -165,13 +179,21 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: TextFormField(
-                        // controller: controller,
+                        controller: controllerTextField[index],
                         autofocus: true,
                         focusNode: _focusNodes[index],
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (value) {
                           _focusNodes[index + 1].requestFocus();
+                          // setState(() {
+                          //   wheelInit.add(value);
+                          //   print(wheelInit);
+                          // });
                         },
+                        // onChanged: ((value) => setState(() {
+                        //       wheelInit.add(value);
+                        //       print(wheelInit);
+                        //     })),
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                               onPressed: (() => _removeAtIndex(index)),
