@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/list_of_wheels_model.dart';
 import '../settings/settings_controller.dart';
 import 'global_settings_screen.dart';
 
@@ -103,6 +105,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.read<ListOfWheelsModel>();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -110,17 +113,30 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
           title: const Text('Добавить колесо'),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor:
-              Theme.of(context).floatingActionButtonTheme.backgroundColor,
-          foregroundColor:
-              Theme.of(context).floatingActionButtonTheme.foregroundColor,
-          onPressed: () {
-            _insert();
-          },
-          child: const Icon(Icons.add),
+        floatingActionButton: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 35),
+              child: FloatingActionButton(
+                onPressed: () => model.saveListOfWheel(context),
+                heroTag: null,
+                child: const Icon(Icons.check_outlined),
+              ),
+            ),
+            const Spacer(),
+            FloatingActionButton(
+              backgroundColor:
+                  Theme.of(context).floatingActionButtonTheme.backgroundColor,
+              foregroundColor:
+                  Theme.of(context).floatingActionButtonTheme.foregroundColor,
+              onPressed: () => _insert(),
+              heroTag: null,
+              child: const Icon(Icons.add),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 75),
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
           child: Column(
