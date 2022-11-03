@@ -14,8 +14,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
   provider: ^6.0.3
   shared_preferences: ^2.0.15
 
@@ -24,7 +22,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  hive_generator: ^2.0.0
 
 flutter:
   uses-material-design: true
