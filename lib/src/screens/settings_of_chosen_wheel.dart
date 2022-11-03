@@ -27,7 +27,6 @@ class _SettingsOfChosenWheelState extends State<SettingsOfChosenWheel> {
               padding: const EdgeInsets.only(
                   top: 20, left: 20, right: 20, bottom: 10),
               child: TextField(
-                obscureText: true,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
