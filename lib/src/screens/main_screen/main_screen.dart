@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wheel_auction/src/screens/add_wheel_screen/add_wheel_screen.dart';
-import 'package:wheel_auction/src/widgets/change_theme_button_widget.dart';
-import 'package:wheel_auction/src/widgets/list_of_wheels_button.dart';
-import 'package:wheel_auction/src/widgets/settings_of_wheel_button.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets/change_theme_button_widget.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets/list_of_wheels_button.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets/settings_of_wheel_button.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
