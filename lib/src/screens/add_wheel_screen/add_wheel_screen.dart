@@ -2,17 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../models/list_of_wheels_model.dart';
-import '../settings/settings_controller.dart';
-import 'global_settings_screen.dart';
+import 'package:wheel_auction/src/screens/global_settings_screen/global_settings_screen.dart';
 
 class AddWheelScreen extends StatefulWidget {
-  const AddWheelScreen({Key? key, required this.controller}) : super(key: key);
+  const AddWheelScreen({Key? key}) : super(key: key);
 
   static const routeName = '/add_wheel';
-
-  final SettingsController controller; // это удалить
 
   @override
   State<AddWheelScreen> createState() => _AddWheelScreenState();
@@ -20,21 +15,29 @@ class AddWheelScreen extends StatefulWidget {
 
 class _AddWheelScreenState extends State<AddWheelScreen> {
   final _listKey = GlobalKey<AnimatedListState>();
-  final _data = [];
+
+  // late GlobalKey<FormState> _formKeyPart2;
+  // late TextEditingController _controllerTextFieldNamesPart2;
+  // var wheels;
+  // var dynamicList;
+
+  final _data = <dynamic>[];
   final _focusNodes = List.generate(100, (index) => FocusNode());
   //ограничение в 100 элементов. Если добавить больше 100 вариантов, будет crash
   // late final TextEditingController controllerTextField;
   final List<TextEditingController> controllerTextField =
       List.generate(100, (index) => TextEditingController());
 
-  final List<String> wheelInit = [];
-
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    // controllerTextField = TextEditingController();
+
+    // _formKeyPart2 = GlobalKey<FormState>();
+    // _controllerTextFieldNamesPart2 = TextEditingController();
+    // wheels = Provider.of<ListOfWheelsProviderPart2>(context, listen: false);
+    // dynamicList = DynamicList(wheels.list);
 
     for (final TextEditingController field in controllerTextField) {
       field.addListener(() {});
@@ -54,11 +57,14 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
     for (final FocusNode node in _focusNodes) {
       node.dispose();
     }
+
+    // _controllerTextFieldNamesPart2.dispose();
+
     super.dispose();
   }
 
   void _insert() {
-    final element = (_data.isEmpty ? 0 : _data.last) + 1;
+    dynamic element = (_data.isEmpty ? 0 : _data.last) + 1;
     _data.add(element);
     final index = _data.length - 1;
     _listKey.currentState?.insertItem(
@@ -80,8 +86,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
     _focusNodes[index + 1].requestFocus();
   }
 
-  _removeAtIndex(int index) {
-    final element = _data.removeAt(index);
+  void _removeAtIndex(int index) {
+    dynamic element = _data.removeAt(index);
     _listKey.currentState?.removeItem(index, (context, animation) {
       return SlideTransition(
         position: animation.drive(Tween<Offset>(
@@ -105,7 +111,9 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.read<ListOfWheelsModel>();
+    // var wheels = context.watch<ListOfWheelsProvider>().wheels;
+    // var listOfWheel = context.watch<ListOfWheelsProvider>().listOfVariants;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -118,7 +126,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 35),
               child: FloatingActionButton(
-                onPressed: () => model.saveListOfWheel(context),
+                onPressed: () {},
                 heroTag: null,
                 child: const Icon(Icons.check_outlined),
               ),
@@ -145,18 +153,27 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
               Padding(
                 padding: const EdgeInsets.only(
                     top: 20, left: 20, right: 20, bottom: 10),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
-                        borderSide: BorderSide(
-                            width: 2, color: Theme.of(context).focusColor)),
-                    hintText: 'Название',
-                    filled: true,
-                    fillColor: Theme.of(context).primaryColorLight,
+                child: Form(
+                  // key: _formKeyPart2,
+                  // ??????????????????????????
+                  child: TextFormField(
+                    // controller: _controllerTextFieldNamesPart2,
+                    // ???????????????????????????????????
+                    // onSaved: ((newValue) {
+                    //   wheels.addWheel(newValue);
+                    // }),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          borderSide: BorderSide(
+                              width: 2, color: Theme.of(context).focusColor)),
+                      hintText: 'Название',
+                      filled: true,
+                      fillColor: Theme.of(context).primaryColorLight,
+                    ),
                   ),
                 ),
               ),
@@ -201,15 +218,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (value) {
                           _focusNodes[index + 1].requestFocus();
-                          // setState(() {
-                          //   wheelInit.add(value);
-                          //   print(wheelInit);
-                          // });
                         },
-                        // onChanged: ((value) => setState(() {
-                        //       wheelInit.add(value);
-                        //       print(wheelInit);
-                        //     })),
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                               onPressed: (() => _removeAtIndex(index)),
