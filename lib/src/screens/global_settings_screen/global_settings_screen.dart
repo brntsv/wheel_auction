@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GlobalSettingsWheel extends StatefulWidget {
-  GlobalSettingsWheel({Key? key}) : super(key: key);
+  const GlobalSettingsWheel({Key? key}) : super(key: key);
 
   static const routeName = '/add_wheel/settings';
 
