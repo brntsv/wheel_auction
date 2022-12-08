@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../theme/app_theme.dart';
+import 'package:wheel_auction/src/theme/app_theme.dart';
 
 class ChangeThemeButtonWidget extends StatefulWidget {
   const ChangeThemeButtonWidget({Key? key}) : super(key: key);
@@ -14,15 +13,14 @@ class ChangeThemeButtonWidget extends StatefulWidget {
 class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = context.read<ThemeProvider>();
+    final provider = context.watch<ThemeProvider>();
+
     var isDark = themeProvider.isDarkMode;
     return IconButton(
       onPressed: () {
         final newMode = !isDark;
         setState(() => isDark = newMode);
-        //
-
-        final provider = Provider.of<ThemeProvider>(context, listen: false);
         provider.toggleTheme(isDark);
       },
       icon: Icon(

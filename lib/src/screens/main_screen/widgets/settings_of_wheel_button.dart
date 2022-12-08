@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../screens/settings_of_chosen_wheel.dart';
+import 'package:wheel_auction/src/screens/settings_of_chosen_screen/settings_of_chosen_wheel.dart';
 
 class SettingsOfWheelButton extends StatefulWidget {
-  SettingsOfWheelButton({Key? key}) : super(key: key);
+  const SettingsOfWheelButton({Key? key}) : super(key: key);
 
   @override
   State<SettingsOfWheelButton> createState() => _SettingsOfWheelButtonState();
@@ -18,7 +17,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
     return IconButton(
       onPressed: () {
         showGeneralDialog(
-          barrierLabel: "Label",
+          barrierLabel: 'Label',
           barrierDismissible: true,
           barrierColor: Colors.black.withOpacity(0.5),
           transitionDuration: const Duration(milliseconds: 300),

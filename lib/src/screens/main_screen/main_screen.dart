@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../widgets/change_theme_button_widget.dart';
-import '../widgets/list_of_wheels_button.dart';
-import '../widgets/settings_of_wheel_button.dart';
-import 'add_wheel_screen.dart';
+import 'package:wheel_auction/src/screens/add_wheel_screen/add_wheel_screen.dart';
+import 'package:wheel_auction/src/widgets/change_theme_button_widget.dart';
+import 'package:wheel_auction/src/widgets/list_of_wheels_button.dart';
+import 'package:wheel_auction/src/widgets/settings_of_wheel_button.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -15,10 +14,10 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [
-          const _TopWidget(),
+        children: const [
+          _TopWidget(),
           _CenterWidget(),
-          const _BottomWidget(),
+          _BottomWidget(),
         ],
       ),
     );
@@ -38,7 +37,7 @@ class _TopWidget extends StatelessWidget {
             flex: 1,
             child: Container(),
           ),
-          Flexible(
+          const Flexible(
             flex: 4,
             fit: FlexFit.tight,
             child: ListOfWheelsButton(),
@@ -63,7 +62,7 @@ class _TopWidget extends StatelessWidget {
 }
 
 class _CenterWidget extends StatefulWidget {
-  _CenterWidget({Key? key}) : super(key: key);
+  const _CenterWidget({Key? key}) : super(key: key);
 
   @override
   State<_CenterWidget> createState() => __CenterWidgetState();
@@ -105,10 +104,10 @@ class _BottomWidget extends StatelessWidget {
               ),
             ),
           ),
-          Flexible(
+          const Flexible(
             flex: 1,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: EdgeInsets.all(12.0),
               child: SettingsOfWheelButton(),
             ),
           )

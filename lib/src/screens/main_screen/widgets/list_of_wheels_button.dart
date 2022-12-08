@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ListOfWheelsButton extends StatefulWidget {
-  ListOfWheelsButton({Key? key}) : super(key: key);
+class ListOfWheelsButton extends StatelessWidget {
+  const ListOfWheelsButton({Key? key}) : super(key: key);
 
-  @override
-  State<ListOfWheelsButton> createState() => _ListOfWheelsButtonState();
-}
-
-class _ListOfWheelsButtonState extends State<ListOfWheelsButton> {
   @override
   Widget build(BuildContext context) {
+    // var wheels = context.watch<ListOfWheelsProvider>().wheels;
+    // var _listOfWheel = context.watch<ListOfWheelsProvider>().listOfWheel;
+
     return TextButton(
       onPressed: () {
         showGeneralDialog(
-          barrierLabel: "Мои колеса",
+          barrierLabel: 'Мои колеса',
           barrierDismissible: true,
           barrierColor: Colors.black.withOpacity(0.2),
           transitionDuration: const Duration(milliseconds: 250),
