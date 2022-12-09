@@ -4,6 +4,7 @@ import 'package:wheel_auction/src/screens/add_wheel_screen/add_wheel_screen.dart
 import 'package:wheel_auction/src/screens/global_settings_screen/global_settings_screen.dart';
 import 'package:wheel_auction/src/screens/main_screen/main_screen.dart';
 import 'package:wheel_auction/src/screens/main_screen/model/list_of_wheels_model.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets/change_theme_button/theme_provider.dart';
 import 'package:wheel_auction/src/screens/settings_of_chosen_screen/settings_of_chosen_wheel.dart';
 import 'package:wheel_auction/src/settings/settings_controller.dart';
 import 'package:wheel_auction/src/theme/app_theme.dart';
