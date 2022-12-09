@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wheel_auction/src/theme/app_theme.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets/change_theme_button/theme_provider.dart';
 
 class ChangeThemeButtonWidget extends StatefulWidget {
   const ChangeThemeButtonWidget({Key? key}) : super(key: key);
