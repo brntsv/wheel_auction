@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets/settings_of_wheel_button/settings_data_provider.dart';
 import 'package:wheel_auction/src/screens/settings_of_chosen_screen/settings_of_chosen_wheel.dart';
 
 class SettingsOfWheelButton extends StatefulWidget {
@@ -9,8 +10,32 @@ class SettingsOfWheelButton extends StatefulWidget {
 }
 
 class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
-  bool _isSwitched = true;
+  bool _isSwitched = false;
   double _currentSliderValue = 20;
+  final _servicePreferences = SettingsDataProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    _getValue();
+  }
+
+  void _getValue() async {
+    final settings = await _servicePreferences.loadValue();
+    setState(() {
+      _isSwitched = settings.isSwitched;
+      _currentSliderValue = settings.currentSliderValue;
+    });
+  }
+
+  void _saveValue() {
+    final newSettings = Settings(
+      isSwitched: _isSwitched,
+      currentSliderValue: _currentSliderValue,
+    );
+    _servicePreferences.saveToggleValue(newSettings);
+    _servicePreferences.saveSliderValue(newSettings);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +98,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                         setState(() {
                                           _isSwitched = newValue;
                                         });
+                                        _saveValue();
                                       },
                                       activeTrackColor: Theme.of(context)
                                           .toggleableActiveColor,
@@ -113,6 +139,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                       setState(() {
                                         _currentSliderValue = value;
                                       });
+                                      _saveValue();
                                     },
                                     activeColor:
                                         Theme.of(context).toggleableActiveColor,
