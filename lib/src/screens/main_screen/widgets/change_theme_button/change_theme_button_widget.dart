@@ -21,7 +21,7 @@ class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
       onPressed: () {
         final newMode = !isDark;
         setState(() => isDark = newMode);
-        provider.toggleTheme(isDark);
+        provider.toggleTheme(newMode);
       },
       icon: Icon(
         isDark ? Icons.sunny : Icons.nightlight_round,
@@ -30,18 +30,27 @@ class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
   }
 }
 
-// class ChangeThemeButtonWidget extends StatelessWidget {
-//   const ChangeThemeButtonWidget({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final themeProvider = Provider.of<ThemeProvider>(context);
-//     return Switch.adaptive(
-//       value: themeProvider.isDarkMode,
-//       onChanged: (value) {
-//         final provider = Provider.of<ThemeProvider>(context, listen: false);
-//         provider.toggleTheme(value);
-//       },
-//     );
-//   }
-// }
+
+  /// Заготовка для shared preferences
+  
+  // final _themePreferences = ThemeDataProvider();
+  // bool _isOn = false;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getValue();
+  // }
+
+  // void _getValue() async {
+  //   final theme = await _themePreferences.loadThemeValue();
+  //   setState(() {
+  //     _isOn = theme.isOn;
+  //   });
+  // }
+
+  // void _saveValue() {
+  //   final newMode = Settings(_isOn);
+  //   _themePreferences.saveThemeValue(newMode);
+  // }

@@ -10,3 +10,26 @@ class ThemeProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+
+
+/// Заготовка для shared preferences
+
+// class Settings {
+//   final bool isOn;
+
+//   Settings(this.isOn);
+// }
+
+// class ThemeDataProvider {
+//   final sharedPreferences = SharedPreferences.getInstance();
+
+//   Future<Settings> loadThemeValue() async {
+//     final isOn = (await sharedPreferences).getBool('is_on') ?? false;
+
+//     return Settings(isOn);
+//   }
+
+//   Future<void> saveThemeValue(Settings theme) async {
+//     (await sharedPreferences).setBool('is_on', theme.isOn);
+//   }
+// }
