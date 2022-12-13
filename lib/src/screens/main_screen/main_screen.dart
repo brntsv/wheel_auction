@@ -13,6 +13,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           _TopWidget(),
           _CenterWidget(),
@@ -71,7 +72,7 @@ class __CenterWidgetState extends State<_CenterWidget> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder(
-      fallbackHeight: 600,
+      fallbackHeight: 361,
     );
   }
 }
