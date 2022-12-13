@@ -14,33 +14,37 @@ class AddWheelScreen extends StatefulWidget {
 }
 
 class _AddWheelScreenState extends State<AddWheelScreen> {
+  /// кей для названий колес
+  final _formKey = GlobalKey<FormState>();
+
+  /// кей для анимированного листа(заполненных полей)
   final _listKey = GlobalKey<AnimatedListState>();
 
-  // late GlobalKey<FormState> _formKeyPart2;
-  // late TextEditingController _controllerTextFieldNamesPart2;
-  // var wheels;
-  // var dynamicList;
-
   final _data = <dynamic>[];
+
+  /// генерация листа для фокус нод
   final _focusNodes = List.generate(100, (index) => FocusNode());
   //ограничение в 100 элементов. Если добавить больше 100 вариантов, будет crash
-  // late final TextEditingController controllerTextField;
-  final List<TextEditingController> controllerTextField =
+
+  /// контроллер text field для названий колес
+  final TextEditingController controllerTextFieldNameWheel =
+      TextEditingController();
+
+  /// контроллер text field для вариантов колес
+  final List<TextEditingController> controllerTextFieldEventsWheel =
       List.generate(100, (index) => TextEditingController());
 
+  /// контроллер скролла
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
 
-    // _formKeyPart2 = GlobalKey<FormState>();
-    // _controllerTextFieldNamesPart2 = TextEditingController();
-    // wheels = Provider.of<ListOfWheelsProviderPart2>(context, listen: false);
-    // dynamicList = DynamicList(wheels.list);
+    controllerTextFieldNameWheel.addListener(_printTitleValue);
 
-    for (final TextEditingController field in controllerTextField) {
-      field.addListener(() {});
+    for (final TextEditingController event in controllerTextFieldEventsWheel) {
+      event.addListener(_printOptionsValue);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -48,17 +52,26 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
     });
   }
 
+  // TODO Функции для тестирования состояния текс филдов
+  void _printTitleValue() {
+    print('название: ${controllerTextFieldNameWheel.text}');
+  }
+
+  void _printOptionsValue() {
+    print('варианты: ${controllerTextFieldEventsWheel.map((e) => e.text)}');
+  }
+
   @override
   void dispose() {
-    for (final TextEditingController field in controllerTextField) {
-      field.dispose();
+    controllerTextFieldNameWheel.dispose();
+
+    for (final TextEditingController event in controllerTextFieldEventsWheel) {
+      event.dispose();
     }
 
     for (final FocusNode node in _focusNodes) {
       node.dispose();
     }
-
-    // _controllerTextFieldNamesPart2.dispose();
 
     super.dispose();
   }
@@ -87,7 +100,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   }
 
   void _removeAtIndex(int index) {
-    dynamic element = _data.removeAt(index);
+    // dynamic element = _data.removeAt(index);
+    controllerTextFieldEventsWheel.removeAt(index);
     _listKey.currentState?.removeItem(index, (context, animation) {
       return SlideTransition(
         position: animation.drive(Tween<Offset>(
@@ -111,9 +125,6 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var wheels = context.watch<ListOfWheelsProvider>().wheels;
-    // var listOfWheel = context.watch<ListOfWheelsProvider>().listOfVariants;
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -154,14 +165,12 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                 padding: const EdgeInsets.only(
                     top: 20, left: 20, right: 20, bottom: 10),
                 child: Form(
-                  // key: _formKeyPart2,
-                  // ??????????????????????????
+                  // !!!!!!!!!!
+                  key: _formKey,
                   child: TextFormField(
-                    // controller: _controllerTextFieldNamesPart2,
-                    // ???????????????????????????????????
-                    // onSaved: ((newValue) {
-                    //   wheels.addWheel(newValue);
-                    // }),
+                    // onSaved: (newValue) => _formKey.currentState?.save(),
+                    // !!!!!!!!!
+                    controller: controllerTextFieldNameWheel,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -212,7 +221,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: TextFormField(
-                        controller: controllerTextField[index],
+                        // !!!!!!!!!
+                        controller: controllerTextFieldEventsWheel[index],
                         autofocus: true,
                         focusNode: _focusNodes[index],
                         textInputAction: TextInputAction.next,
