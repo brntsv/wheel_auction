@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wheel_auction/src/screens/main_screen/model/list_of_wheels_model.dart';
 
 class ListOfWheelsButton extends StatelessWidget {
   const ListOfWheelsButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // var wheels = context.watch<ListOfWheelsProvider>().wheels;
-    // var _listOfWheel = context.watch<ListOfWheelsProvider>().listOfWheel;
+    final provider = context.watch<ListOfWheelsModel>();
+    final wheels = provider.wheels;
 
     return TextButton(
       onPressed: () {
@@ -20,14 +22,16 @@ class ListOfWheelsButton extends StatelessWidget {
             return Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: 300,
-                margin: const EdgeInsets.only(bottom: 425, left: 50, right: 50),
+                constraints:
+                    const BoxConstraints(maxHeight: 315, minHeight: 100),
+                margin: const EdgeInsets.only(bottom: 410, left: 50, right: 50),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColorDark,
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: StatefulBuilder(
                   builder: (context, setState) => Dialog(
+                    alignment: Alignment.topCenter,
                     backgroundColor: Theme.of(context).primaryColorDark,
                     insetPadding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 20),
@@ -39,41 +43,44 @@ class ListOfWheelsButton extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(left: 10),
+                            padding: EdgeInsets.only(left: 10, top: 10),
                             child: Text('Мои колеса'),
                           ),
-                          ListView.builder(
-                            primary: false,
-                            shrinkWrap: true,
-                            itemCount:
-                                6, //сюда массив передать сформированного листа
-                            itemBuilder: ((context, index) {
-                              return Card(
-                                color: Theme.of(context).cardColor,
-                                elevation: 3,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(15),
-                                  splashColor: Colors.white.withAlpha(30),
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 20, right: 5),
-                                    child: Row(
-                                      children: [
-                                        const Text('Название варианта'),
-                                        const Spacer(),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_right),
-                                        )
-                                      ],
+                          Consumer<ListOfWheelsModel>(
+                            builder: ((context, value, child) {
+                              return ListView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                itemCount: wheels.length,
+                                itemBuilder: ((context, index) {
+                                  return Card(
+                                    color: Theme.of(context).cardColor,
+                                    elevation: 3,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
-                                  ),
-                                ),
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(15),
+                                      splashColor: Colors.white.withAlpha(30),
+                                      onTap: () {},
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 5),
+                                        child: Row(
+                                          children: [
+                                            Text('${wheels[index]}'),
+                                            const Spacer(),
+                                            IconButton(
+                                              onPressed: () {},
+                                              icon: const Icon(
+                                                  Icons.keyboard_arrow_right),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
                               );
                             }),
                           ),
@@ -96,7 +103,7 @@ class ListOfWheelsButton extends StatelessWidget {
         );
       },
       child: Text(
-        'NameWheelButton',
+        (wheels.isEmpty ? '' : wheels.last) ?? '',
         style: Theme.of(context).textTheme.bodyText2,
       ),
     );
