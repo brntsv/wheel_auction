@@ -17,22 +17,20 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   /// кей для названий колес
   final _formKey = GlobalKey<FormState>();
 
-  /// кей для анимированного листа(заполненных полей)
+  /// кей для анимированного листа(//? заполненных полей)
   final _listKey = GlobalKey<AnimatedListState>();
 
   final _data = <dynamic>[];
-
-  /// генерация листа для фокус нод
-  final _focusNodes = List.generate(100, (index) => FocusNode());
-  //ограничение в 100 элементов. Если добавить больше 100 вариантов, будет crash
 
   /// контроллер text field для названий колес
   final TextEditingController controllerTextFieldNameWheel =
       TextEditingController();
 
   /// контроллер text field для вариантов колес
-  final List<TextEditingController> controllerTextFieldEventsWheel =
-      List.generate(100, (index) => TextEditingController());
+  final List<TextEditingController> controllerTextFieldEventsWheel = [];
+
+  /// генерация листа для фокус нод
+  final List<FocusNode> _focusNodes = [];
 
   /// контроллер скролла
   final ScrollController _scrollController = ScrollController();
@@ -77,8 +75,14 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   }
 
   void _insert() {
+    final event = TextEditingController();
+    final focusNode = FocusNode();
     dynamic element = (_data.isEmpty ? 0 : _data.last) + 1;
+
     _data.add(element);
+    controllerTextFieldEventsWheel.add(event);
+    _focusNodes.add(focusNode);
+
     final index = _data.length - 1;
     _listKey.currentState?.insertItem(
       index,
@@ -96,12 +100,16 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
       },
     );
 
-    _focusNodes[index + 1].requestFocus();
+    _focusNodes[index].requestFocus();
+
+    // TODO Функция для тестирования состояния текс филдов
+    print('варианты: ${controllerTextFieldEventsWheel.map((e) => e.text)}');
   }
 
   void _removeAtIndex(int index) {
-    // dynamic element = _data.removeAt(index);
     controllerTextFieldEventsWheel.removeAt(index);
+    _focusNodes.removeAt(index);
+    _data.removeAt(index);
     _listKey.currentState?.removeItem(index, (context, animation) {
       return SlideTransition(
         position: animation.drive(Tween<Offset>(
@@ -148,7 +156,13 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                   Theme.of(context).floatingActionButtonTheme.backgroundColor,
               foregroundColor:
                   Theme.of(context).floatingActionButtonTheme.foregroundColor,
-              onPressed: () => _insert(),
+              onPressed: () {
+                if (_data.length < 99) {
+                  _insert();
+                } else {
+                  FocusScope.of(context).unfocus();
+                }
+              },
               heroTag: null,
               child: const Icon(Icons.add),
             ),
@@ -227,7 +241,11 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                         focusNode: _focusNodes[index],
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (value) {
-                          _focusNodes[index + 1].requestFocus();
+                          if (_focusNodes.last.hasFocus) {
+                            FocusScope.of(context).unfocus();
+                          } else {
+                            _focusNodes[index + 1].requestFocus();
+                          }
                         },
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
