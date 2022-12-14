@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wheel_auction/src/screens/global_settings_screen/global_settings_screen.dart';
+import 'package:wheel_auction/src/screens/main_screen/model/list_of_wheels_model.dart';
 
 class AddWheelScreen extends StatefulWidget {
   const AddWheelScreen({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   /// контроллер text field для вариантов колес
   final List<TextEditingController> controllerTextFieldEventsWheel = [];
 
-  /// генерация листа для фокус нод
+  /// инициализация листа для фокус нод
   final List<FocusNode> _focusNodes = [];
 
   /// контроллер скролла
@@ -133,6 +134,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final listOfWheels = context.read<ListOfWheelsModel>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -145,7 +148,10 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 35),
               child: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  _formKey.currentState?.save();
+                  Navigator.of(context).pop();
+                },
                 heroTag: null,
                 child: const Icon(Icons.check_outlined),
               ),
@@ -157,11 +163,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
               foregroundColor:
                   Theme.of(context).floatingActionButtonTheme.foregroundColor,
               onPressed: () {
-                if (_data.length < 99) {
-                  _insert();
-                } else {
-                  FocusScope.of(context).unfocus();
-                }
+                _insert();
               },
               heroTag: null,
               child: const Icon(Icons.add),
@@ -182,9 +184,11 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                   // !!!!!!!!!!
                   key: _formKey,
                   child: TextFormField(
-                    // onSaved: (newValue) => _formKey.currentState?.save(),
-                    // !!!!!!!!!
                     controller: controllerTextFieldNameWheel,
+                    onSaved: (newValue) {
+                      listOfWheels.addNameWheel(newValue);
+                    },
+                    // !!!!!!!!!
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -234,7 +238,11 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                     )),
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
+                      // !!!!!!!!
                       child: TextFormField(
+                        onChanged: (value) {
+                          // print(value);
+                        },
                         // !!!!!!!!!
                         controller: controllerTextFieldEventsWheel[index],
                         autofocus: true,
@@ -272,21 +280,6 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
             ],
           ),
         ),
-        // bottomSheet: SizedBox(
-        //   width: double.infinity,
-        //   height: 50,
-        //   child: ElevatedButton(
-        //     style: ButtonStyle(
-        //         backgroundColor: MaterialStatePropertyAll<Color>(
-        //             Theme.of(context).primaryColor)),
-        //     onPressed: () {
-        //       setState(() {
-        //         _insert();
-        //       });
-        //     },
-        //     child: const Text('+ Добавить вариант'),
-        //   ),
-        // ),
       ),
     );
   }
