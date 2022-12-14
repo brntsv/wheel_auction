@@ -44,7 +44,7 @@ class ListOfWheelsModel with ChangeNotifier {
 
   /// метод добавления колеса в список колес
   void addNameWheel(String? nameOfWheel) {
-    _items.add(nameOfWheel);
+    _items.insert(0, nameOfWheel);
     notifyListeners();
   }
 

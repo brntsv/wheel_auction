@@ -103,7 +103,7 @@ class ListOfWheelsButton extends StatelessWidget {
         );
       },
       child: Text(
-        (wheels.isEmpty ? '' : wheels.last) ?? '',
+        (wheels.isEmpty ? '' : wheels.first) ?? '',
         style: Theme.of(context).textTheme.bodyText2,
       ),
     );
