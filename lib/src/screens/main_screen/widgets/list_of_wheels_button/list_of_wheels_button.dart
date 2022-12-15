@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wheel_auction/src/screens/main_screen/model/list_of_wheels_model.dart';
+import 'package:wheel_auction/src/screens/add_wheel_screen/model/list_of_wheels_model.dart';
 
 class ListOfWheelsButton extends StatelessWidget {
   const ListOfWheelsButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    /// Принимает список колес от Add Wheel Screen
     final provider = context.watch<ListOfWheelsModel>();
     final wheels = provider.wheels;
 
@@ -67,6 +68,8 @@ class ListOfWheelsButton extends StatelessWidget {
                                         padding: const EdgeInsets.only(
                                             left: 20, right: 5),
                                         child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Flexible(
                                               flex: 4,
