@@ -1,34 +1,5 @@
 import 'package:flutter/material.dart';
 
-// class WheelObject {
-//   final String? nameOfWheel;
-//   final List<String> eventOptions;
-//   WheelObject({
-//     required this.nameOfWheel,
-//     required this.eventOptions,
-//   });
-// }
-
-// class ListOfWheelsModel with ChangeNotifier {
-//   /// Внутреннее приватное состояние колес.
-//   final List<WheelObject> _items = [];
-
-//   /// Неизменяемое представление колес.
-//   List<WheelObject> get wheels => _items;
-
-//   /// метод добавления колеса в список колес
-//   void addWheel(WheelObject item) {
-//     _items.add(item);
-//     notifyListeners();
-//   }
-
-//   /// метод удаления колеса
-//   void removeWheel(WheelObject item) {
-//     _items.remove(item);
-//     notifyListeners();
-//   }
-// }
-
 class ListOfWheelsModel with ChangeNotifier {
   /// Внутреннее приватное состояние колес.
   final List<String?> _items = [];
@@ -90,22 +61,37 @@ class ListOfWheelsModel with ChangeNotifier {
 
 
 
+/// Сохранил старые версии пока что
 
 
+// class WheelObject {
+//   final String? nameOfWheel;
+//   final List<String> eventOptions;
+//   WheelObject({
+//     required this.nameOfWheel,
+//     required this.eventOptions,
+//   });
+// }
 
+// class ListOfWheelsModel with ChangeNotifier {
+//   /// Внутреннее приватное состояние колес.
+//   final List<WheelObject> _items = [];
 
+//   /// Неизменяемое представление колес.
+//   List<WheelObject> get wheels => _items;
 
+//   /// метод добавления колеса в список колес
+//   void addWheel(WheelObject item) {
+//     _items.add(item);
+//     notifyListeners();
+//   }
 
-
-
-
-
-
-
-
-
-
-
+//   /// метод удаления колеса
+//   void removeWheel(WheelObject item) {
+//     _items.remove(item);
+//     notifyListeners();
+//   }
+// }
 
 
 

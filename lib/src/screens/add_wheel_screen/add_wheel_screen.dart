@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wheel_auction/src/screens/add_wheel_screen/model/list_of_wheels_model.dart';
 import 'package:wheel_auction/src/screens/global_settings_screen/global_settings_screen.dart';
-import 'package:wheel_auction/src/screens/main_screen/model/list_of_wheels_model.dart';
 
 class AddWheelScreen extends StatefulWidget {
   const AddWheelScreen({Key? key}) : super(key: key);
