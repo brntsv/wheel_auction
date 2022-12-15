@@ -33,9 +33,9 @@ class _TopWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(
+          const Flexible(
             flex: 1,
-            child: Container(),
+            child: ChangeThemeButtonWidget(),
           ),
           const Flexible(
             flex: 4,
@@ -89,9 +89,9 @@ class _BottomWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Flexible(
+          Flexible(
             flex: 1,
-            child: ChangeThemeButtonWidget(),
+            child: Container(),
           ),
           Flexible(
             flex: 4,

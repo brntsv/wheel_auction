@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyThemes {
+class AppTheme {
   static const _defaultFontFamily = 'Roboto';
   static final darkTheme = ThemeData(
     primaryColor: const Color.fromRGBO(100, 65, 165, 1.0),

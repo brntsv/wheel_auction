@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
             final themeProvider = context.watch<ThemeProvider>();
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              theme: MyThemes.lightTheme,
-              darkTheme: MyThemes.darkTheme,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
               themeMode: themeProvider.selectedThemeMode,
               onGenerateRoute: (RouteSettings routeSettings) {
                 return MaterialPageRoute<void>(
