@@ -101,6 +101,7 @@ class _BottomWidget extends StatelessWidget {
               child: Text(
                 'DeleteWinnerButton',
                 style: textStyle,
+                maxLines: 1,
               ),
             ),
           ),
