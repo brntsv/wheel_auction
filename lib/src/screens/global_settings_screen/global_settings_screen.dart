@@ -12,10 +12,12 @@ class GlobalSettingsWheel extends StatefulWidget {
 class _GlobalSettingsWheelState extends State<GlobalSettingsWheel> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Настройки колеса'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: theme.primaryColor,
       ),
     );
   }

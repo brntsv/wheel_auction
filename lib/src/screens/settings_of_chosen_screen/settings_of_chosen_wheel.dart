@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wheel_auction/src/theme/app_text_style.dart';
 
 class SettingsOfChosenWheel extends StatefulWidget {
   const SettingsOfChosenWheel({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class _SettingsOfChosenWheelState extends State<SettingsOfChosenWheel> {
   bool isSwitched = true;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Редактирование'),
@@ -26,13 +29,15 @@ class _SettingsOfChosenWheelState extends State<SettingsOfChosenWheel> {
             Padding(
               padding: const EdgeInsets.only(
                   top: 20, left: 20, right: 20, bottom: 10),
-              child: TextField(
+              child: TextFormField(
+                style: AppTextStyle.hintInputText,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
-                  labelText: 'Название',
+                  hintText: 'Название',
+                  hintStyle: AppTextStyle.hintInputText,
                   filled: true,
-                  fillColor: Theme.of(context).primaryColorLight,
+                  fillColor: theme.primaryColorLight,
                 ),
               ),
             ),
@@ -42,8 +47,8 @@ class _SettingsOfChosenWheelState extends State<SettingsOfChosenWheel> {
                 //     context, GlobalSettingsWheel.routeName);
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll<Color>(
-                    Theme.of(context).primaryColor),
+                backgroundColor:
+                    MaterialStatePropertyAll<Color>(theme.primaryColor),
                 minimumSize: MaterialStateProperty.all(const Size(200, 40)),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
@@ -53,7 +58,7 @@ class _SettingsOfChosenWheelState extends State<SettingsOfChosenWheel> {
               ),
               child: Text(
                 'Настройки',
-                style: Theme.of(context).textTheme.button,
+                style: theme.textTheme.button,
               ),
             ),
           ],
