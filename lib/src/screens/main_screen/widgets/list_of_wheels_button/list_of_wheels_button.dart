@@ -68,12 +68,21 @@ class ListOfWheelsButton extends StatelessWidget {
                                             left: 20, right: 5),
                                         child: Row(
                                           children: [
-                                            Text('${wheels[index]}'),
-                                            const Spacer(),
-                                            IconButton(
-                                              onPressed: () {},
-                                              icon: const Icon(
-                                                  Icons.keyboard_arrow_right),
+                                            Flexible(
+                                              flex: 4,
+                                              child: Text(
+                                                '${wheels[index]}',
+                                                overflow: TextOverflow.fade,
+                                                softWrap: false,
+                                              ),
+                                            ),
+                                            Flexible(
+                                              flex: 1,
+                                              child: IconButton(
+                                                onPressed: () {},
+                                                icon: const Icon(
+                                                    Icons.keyboard_arrow_right),
+                                              ),
                                             )
                                           ],
                                         ),
@@ -105,6 +114,7 @@ class ListOfWheelsButton extends StatelessWidget {
       child: Text(
         (wheels.isEmpty ? '' : wheels.first) ?? '',
         style: Theme.of(context).textTheme.bodyText2,
+        maxLines: 2,
       ),
     );
   }
