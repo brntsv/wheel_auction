@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wheel_auction/src/screens/add_wheel_screen/model/list_of_wheels_model.dart';
 import 'package:wheel_auction/src/screens/global_settings_screen/global_settings_screen.dart';
+import 'package:wheel_auction/src/theme/app_text_style.dart';
 
 class AddWheelScreen extends StatefulWidget {
   const AddWheelScreen({Key? key}) : super(key: key);
@@ -134,13 +135,14 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   Widget build(BuildContext context) {
     final listOfWheels = context.read<ListOfWheelsModel>();
     final List<String?> listEvents = [];
+    final theme = Theme.of(context);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Добавить колесо'),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: theme.primaryColor,
         ),
         floatingActionButton: Row(
           children: [
@@ -160,10 +162,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
             ),
             const Spacer(),
             FloatingActionButton(
-              backgroundColor:
-                  Theme.of(context).floatingActionButtonTheme.backgroundColor,
-              foregroundColor:
-                  Theme.of(context).floatingActionButtonTheme.foregroundColor,
+              backgroundColor: theme.floatingActionButtonTheme.backgroundColor,
+              foregroundColor: theme.floatingActionButtonTheme.foregroundColor,
               onPressed: () {
                 _insert();
               },
@@ -191,6 +191,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                       listOfWheels.addNameWheel(newValue);
                     },
                     // !!!!!!!!!
+                    style: AppTextStyle.hintInputText,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -198,10 +199,13 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(15)),
                           borderSide: BorderSide(
-                              width: 2, color: Theme.of(context).focusColor)),
+                            width: 2,
+                            color: theme.focusColor,
+                          )),
                       hintText: 'Название',
+                      hintStyle: AppTextStyle.hintInputText,
                       filled: true,
-                      fillColor: Theme.of(context).primaryColorLight,
+                      fillColor: theme.primaryColorLight,
                     ),
                   ),
                 ),
@@ -209,11 +213,13 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.restorablePushNamed(
-                      context, GlobalSettingsWheel.routeName);
+                    context,
+                    GlobalSettingsWheel.routeName,
+                  );
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(
-                      Theme.of(context).primaryColor),
+                  backgroundColor:
+                      MaterialStatePropertyAll<Color>(theme.primaryColor),
                   minimumSize: MaterialStateProperty.all(const Size(200, 40)),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -221,10 +227,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                     ),
                   ),
                 ),
-                child: Text(
-                  'Настройки',
-                  style: Theme.of(context).textTheme.button,
-                ),
+                child: Text('Настройки', style: theme.textTheme.button),
               ),
               // !!!!!!
               Form(
@@ -261,6 +264,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                               _focusNodes[index + 1].requestFocus();
                             }
                           },
+                          style: AppTextStyle.hintInputText,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
                                 onPressed: (() => _removeAtIndex(index)),
@@ -272,12 +276,14 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
                               borderSide: BorderSide(
-                                  width: 2,
-                                  color: Theme.of(context).focusColor),
+                                width: 2,
+                                color: theme.focusColor,
+                              ),
                             ),
                             hintText: 'Название варианта',
+                            hintStyle: AppTextStyle.hintInputText,
                             filled: true,
-                            fillColor: Theme.of(context).primaryColorLight,
+                            fillColor: theme.primaryColorLight,
                           ),
                         ),
                       ),
