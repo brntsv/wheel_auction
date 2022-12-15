@@ -20,6 +20,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
   /// кей для событий колес
   final _formListKey = GlobalKey<FormState>();
+  // ? можно объединить в один формКей, нужно просто виджет Form перенести
+  // ? выше Column и тогда будет достаточно одного _formKey
 
   /// кей для анимированного листа
   final _animKey = GlobalKey<AnimatedListState>();
@@ -43,24 +45,17 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   void initState() {
     super.initState();
 
+    // ! Функция для тестирования состояния названия
     controllerTextFieldNameWheel.addListener(_printTitleValue);
-
-    for (final TextEditingController event in controllerTextFieldEventsWheel) {
-      event.addListener(_printOptionsValue);
-    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _insert();
     });
   }
 
-  // TODO Функции для тестирования состояния текс филдов
+  // ! Функция для тестирования состояния названия
   void _printTitleValue() {
     print('название: ${controllerTextFieldNameWheel.text}');
-  }
-
-  void _printOptionsValue() {
-    print('варианты: ${controllerTextFieldEventsWheel.map((e) => e.text)}');
   }
 
   @override
@@ -106,7 +101,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
     _focusNodes[index].requestFocus();
 
-    // TODO Функция для тестирования состояния текс филдов
+    // ! Функция для тестирования состояния текс филдов
     print('варианты: ${controllerTextFieldEventsWheel.map((e) => e.text)}');
   }
 
