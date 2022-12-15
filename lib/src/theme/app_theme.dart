@@ -1,46 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:wheel_auction/src/theme/app_text_style.dart';
 
 class AppTheme {
   static const _defaultFontFamily = 'Roboto';
+
   static final darkTheme = ThemeData(
-    primaryColor: const Color.fromRGBO(100, 65, 165, 1.0),
-    primaryColorLight: Colors.grey.shade800,
-    primaryColorDark: Colors.grey.shade800,
-    scaffoldBackgroundColor: Colors.grey.shade900,
-    cardColor: Colors.white24,
-    toggleableActiveColor: const Color.fromARGB(255, 132, 109, 173),
     colorScheme: const ColorScheme.dark(),
-    fontFamily: _defaultFontFamily,
-    focusColor: const Color.fromARGB(255, 132, 109, 173),
-    textTheme: const TextTheme(
-      button: TextStyle(color: Colors.white),
-      bodyText1: TextStyle(color: Colors.black),
-      bodyText2: TextStyle(color: Colors.white),
-    ),
+    brightness: Brightness.dark,
+    primaryColor: AppColors.purpleDominant,
+    primaryColorLight: AppColors.primaryDark,
+    primaryColorDark: AppColors.primaryDark,
+    scaffoldBackgroundColor: AppColors.backgroundDark,
+    cardColor: AppColors.cardDark,
+    toggleableActiveColor: AppColors.purplePastelTone,
+    focusColor: AppColors.purplePastelTone,
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       foregroundColor: Colors.white,
-      backgroundColor: Color.fromRGBO(100, 65, 165, 1.0),
+      backgroundColor: AppColors.purpleDominant,
     ),
-    // iconTheme: const IconThemeData(color: Color.fromARGB(255, 132, 109, 173)),
+    iconTheme: const IconThemeData(
+      color: AppColors.backgroundLight,
+      size: 30,
+    ),
+    fontFamily: _defaultFontFamily,
+    textTheme: const TextTheme(
+      button: AppTextStyle.buttonText,
+      bodyText2: AppTextStyle.listWheelsButtonDark,
+      headline6: AppTextStyle.headlineText,
+    ),
   );
+
   static final lightTheme = ThemeData(
-    primaryColor: const Color.fromRGBO(100, 65, 165, 1.0),
-    primaryColorLight: Colors.white,
-    primaryColorDark: Colors.grey.shade300,
-    scaffoldBackgroundColor: Colors.grey.shade200,
-    cardColor: Colors.grey.shade200,
-    toggleableActiveColor: const Color.fromARGB(255, 132, 109, 173),
     colorScheme: const ColorScheme.light(),
-    fontFamily: _defaultFontFamily,
-    focusColor: const Color.fromARGB(255, 132, 109, 173),
-    textTheme: const TextTheme(
-      button: TextStyle(color: Colors.white),
-      bodyText2: TextStyle(color: Colors.black),
-    ),
+    brightness: Brightness.light,
+    primaryColor: AppColors.purpleDominant,
+    primaryColorLight: AppColors.primaryLight,
+    primaryColorDark: AppColors.backgroundLight,
+    scaffoldBackgroundColor: AppColors.backgroundLight,
+    cardColor: AppColors.cardLight,
+    toggleableActiveColor: AppColors.purplePastelTone,
+    focusColor: AppColors.purplePastelTone,
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       foregroundColor: Colors.white,
-      backgroundColor: Color.fromRGBO(100, 65, 165, 1.0),
+      backgroundColor: AppColors.purpleDominant,
     ),
-    // iconTheme: const IconThemeData(color: Color.fromARGB(255, 132, 109, 173)),
+    iconTheme: const IconThemeData(
+      color: AppColors.backgroundDark,
+      size: 32,
+    ),
+    fontFamily: _defaultFontFamily,
+    textTheme: const TextTheme(
+      button: AppTextStyle.buttonText,
+      bodyText2: AppTextStyle.listWheelsButtonLight,
+      headline6: AppTextStyle.headlineText,
+    ),
   );
+}
+
+abstract class AppColors {
+  static const transparent = Color(0x00000000);
+  static const purpleDominant = Color(0xFF6441A5);
+  static const purplePastelTone = Color(0xFF846DAD);
+
+  static const backgroundDark = Color(0xFF212121);
+  static const primaryDark = Color(0xFF424242);
+  static const cardDark = Color(0x3CFFFFFF);
+
+  static const backgroundLight = Color(0xFFE0E0E0);
+  static const primaryLight = Color(0xFFEEEEEE);
+  static const cardLight = Color(0xFFEEEEEE);
 }
