@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wheel_auction/src/screens/main_screen/widgets/settings_of_wheel_button/settings_data_provider.dart';
 import 'package:wheel_auction/src/screens/settings_of_chosen_screen/settings_of_chosen_wheel.dart';
+import 'package:wheel_auction/src/theme/app_text_style.dart';
 
 class SettingsOfWheelButton extends StatefulWidget {
   const SettingsOfWheelButton({Key? key}) : super(key: key);
@@ -39,6 +40,8 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return IconButton(
       onPressed: () {
         showGeneralDialog(
@@ -54,14 +57,14 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                 height: 600,
                 margin: const EdgeInsets.only(bottom: 50, left: 50, right: 16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColorDark,
+                  color: theme.primaryColorDark,
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: StatefulBuilder(
                   builder: (context, setState) => Dialog(
-                    backgroundColor: Theme.of(context).primaryColorDark,
+                    backgroundColor: theme.primaryColorDark,
                     insetPadding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 24),
+                        horizontal: 16, vertical: 24),
                     elevation: 0,
                     child: Column(
                       children: [
@@ -90,7 +93,11 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                     const EdgeInsets.only(left: 20, right: 5),
                                 child: Row(
                                   children: [
-                                    const Text('Режим на выбывание'),
+                                    const Text(
+                                      'Режим на выбывание',
+                                      style: AppTextStyle.cardSettingsWheel,
+                                      overflow: TextOverflow.fade,
+                                    ),
                                     const Spacer(),
                                     Switch(
                                       value: _isSwitched,
@@ -100,8 +107,8 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                         });
                                         _saveValue();
                                       },
-                                      activeTrackColor: Theme.of(context)
-                                          .toggleableActiveColor,
+                                      activeTrackColor:
+                                          theme.toggleableActiveColor,
                                     ),
                                   ],
                                 ),
@@ -113,7 +120,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                           width: double.infinity,
                           height: 100,
                           child: Card(
-                            color: Theme.of(context).cardColor,
+                            color: theme.cardColor,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -125,7 +132,11 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                 children: [
                                   Row(
                                     children: const [
-                                      Text('Длительность вращения'),
+                                      Text(
+                                        'Длительность вращения',
+                                        style: AppTextStyle.cardSettingsWheel,
+                                        overflow: TextOverflow.fade,
+                                      ),
                                       Spacer(),
                                     ],
                                   ),
@@ -141,12 +152,9 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                       });
                                       _saveValue();
                                     },
-                                    activeColor:
-                                        Theme.of(context).toggleableActiveColor,
-                                    thumbColor:
-                                        Theme.of(context).toggleableActiveColor,
-                                    inactiveColor:
-                                        Theme.of(context).primaryColorDark,
+                                    activeColor: theme.toggleableActiveColor,
+                                    thumbColor: theme.toggleableActiveColor,
+                                    inactiveColor: theme.primaryColorDark,
                                   ),
                                 ],
                               ),
@@ -157,7 +165,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                           width: double.infinity,
                           height: 100,
                           child: Card(
-                            color: Theme.of(context).cardColor,
+                            color: theme.cardColor,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -169,7 +177,11 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                 children: [
                                   Row(
                                     children: const [
-                                      Text('Стиль колеса'),
+                                      Text(
+                                        'Стиль колеса',
+                                        style: AppTextStyle.cardSettingsWheel,
+                                        overflow: TextOverflow.fade,
+                                      ),
                                       Spacer(),
                                     ],
                                   ),
@@ -182,14 +194,13 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                           width: double.infinity,
                           height: 55,
                           child: Card(
-                            color: Theme.of(context).cardColor,
+                            color: theme.cardColor,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: InkWell(
                               borderRadius: BorderRadius.circular(15),
-                              splashColor: Colors.white.withAlpha(30),
                               onTap: () {
                                 Navigator.restorablePushNamed(
                                     context, SettingsOfChosenWheel.routeName);
@@ -199,7 +210,11 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                     const EdgeInsets.only(left: 20, right: 5),
                                 child: Row(
                                   children: const [
-                                    Text('Редактировать колесо'),
+                                    Text(
+                                      'Редактировать колесо',
+                                      style: AppTextStyle.cardSettingsWheel,
+                                      overflow: TextOverflow.fade,
+                                    ),
                                     Spacer(),
                                     Icon(Icons.keyboard_arrow_right)
                                   ],
