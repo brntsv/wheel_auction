@@ -18,8 +18,11 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   /// кей для названий колес
   final _formKey = GlobalKey<FormState>();
 
-  /// кей для анимированного листа(//? заполненных полей)
-  final _listKey = GlobalKey<AnimatedListState>();
+  /// кей для событий колес
+  final _formListKey = GlobalKey<FormState>();
+
+  /// кей для анимированного листа
+  final _animKey = GlobalKey<AnimatedListState>();
 
   final _data = <dynamic>[];
 
@@ -85,7 +88,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
     _focusNodes.add(focusNode);
 
     final index = _data.length - 1;
-    _listKey.currentState?.insertItem(
+    _animKey.currentState?.insertItem(
       index,
       duration: const Duration(milliseconds: 300),
     );
@@ -111,7 +114,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
     controllerTextFieldEventsWheel.removeAt(index);
     _focusNodes.removeAt(index);
     _data.removeAt(index);
-    _listKey.currentState?.removeItem(index, (context, animation) {
+    _animKey.currentState?.removeItem(index, (context, animation) {
       return SlideTransition(
         position: animation.drive(Tween<Offset>(
           begin: const Offset(1.0, 0.0),
@@ -135,6 +138,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   @override
   Widget build(BuildContext context) {
     final listOfWheels = context.read<ListOfWheelsModel>();
+    final List<String?> listEvents = [];
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -150,6 +154,9 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
               child: FloatingActionButton(
                 onPressed: () {
                   _formKey.currentState?.save();
+
+                  _formListKey.currentState?.save();
+
                   Navigator.of(context).pop();
                 },
                 heroTag: null,
@@ -176,7 +183,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
               parent: AlwaysScrollableScrollPhysics()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
+            children: [
               Padding(
                 padding: const EdgeInsets.only(
                     top: 20, left: 20, right: 20, bottom: 10),
@@ -224,58 +231,64 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                   style: Theme.of(context).textTheme.button,
                 ),
               ),
-              AnimatedList(
-                key: _listKey,
-                initialItemCount: _data.length,
-                controller: _scrollController,
-                primary: false,
-                shrinkWrap: true,
-                itemBuilder: ((context, index, animation) {
-                  return SlideTransition(
-                    position: animation.drive(Tween<Offset>(
-                      begin: const Offset(-1.0, 0.0),
-                      end: const Offset(0.0, 0.0),
-                    )),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      // !!!!!!!!
-                      child: TextFormField(
-                        onChanged: (value) {
-                          // print(value);
-                        },
-                        // !!!!!!!!!
-                        controller: controllerTextFieldEventsWheel[index],
-                        autofocus: true,
-                        focusNode: _focusNodes[index],
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (value) {
-                          if (_focusNodes.last.hasFocus) {
-                            FocusScope.of(context).unfocus();
-                          } else {
-                            _focusNodes[index + 1].requestFocus();
-                          }
-                        },
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                              onPressed: (() => _removeAtIndex(index)),
-                              icon: const Icon(Icons.delete)),
-                          border: const OutlineInputBorder(
+              // !!!!!!
+              Form(
+                key: _formListKey,
+                child: AnimatedList(
+                  key: _animKey,
+                  initialItemCount: _data.length,
+                  controller: _scrollController,
+                  primary: false,
+                  shrinkWrap: true,
+                  itemBuilder: ((context, index, animation) {
+                    return SlideTransition(
+                      position: animation.drive(Tween<Offset>(
+                        begin: const Offset(-1.0, 0.0),
+                        end: const Offset(0.0, 0.0),
+                      )),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        // !!!!!!!!
+                        child: TextFormField(
+                          controller: controllerTextFieldEventsWheel[index],
+                          onSaved: ((newValue) {
+                            listEvents.add(newValue);
+                            listOfWheels.addListOfEvents(listEvents);
+                          }),
+                          // !!!!!!!!!
+                          autofocus: true,
+                          focusNode: _focusNodes[index],
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (value) {
+                            if (_focusNodes.last.hasFocus) {
+                              FocusScope.of(context).unfocus();
+                            } else {
+                              _focusNodes[index + 1].requestFocus();
+                            }
+                          },
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                onPressed: (() => _removeAtIndex(index)),
+                                icon: const Icon(Icons.delete)),
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(15)),
-                            borderSide: BorderSide(
-                                width: 2, color: Theme.of(context).focusColor),
+                                  const BorderRadius.all(Radius.circular(15)),
+                              borderSide: BorderSide(
+                                  width: 2,
+                                  color: Theme.of(context).focusColor),
+                            ),
+                            hintText: 'Название варианта',
+                            filled: true,
+                            fillColor: Theme.of(context).primaryColorLight,
                           ),
-                          hintText: 'Название варианта',
-                          filled: true,
-                          fillColor: Theme.of(context).primaryColorLight,
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               )
             ],
           ),
