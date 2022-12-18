@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wheel_auction/src/screens/main_screen/widgets/settings_of_wheel_button/settings_data_provider.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/settings_of_wheel_button/settings_data_provider.dart';
 import 'package:wheel_auction/src/screens/settings_of_chosen_screen/settings_of_chosen_wheel.dart';
 import 'package:wheel_auction/src/theme/app_text_style.dart';
 
