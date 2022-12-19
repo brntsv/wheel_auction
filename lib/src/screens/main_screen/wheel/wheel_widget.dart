@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:roulette/roulette.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/arrow.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_controller.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_group.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_style.dart';
 
 class WheelWidget extends StatefulWidget {
   const WheelWidget({Key? key}) : super(key: key);
@@ -15,7 +18,7 @@ class _WheelWidgetState extends State<WheelWidget>
     with SingleTickerProviderStateMixin {
   static final _random = Random();
 
-  late RouletteController _controller;
+  late WheelController _controller;
   bool _clockwise = true;
 
   final colors = <Color>[
@@ -29,21 +32,18 @@ class _WheelWidgetState extends State<WheelWidget>
 
   @override
   void initState() {
-    // Initialize the controller
-    final group = RouletteGroup.uniform(
+    // инициализация контроллера
+    final group = WheelGroup.uniform(
       colors.length,
       colorBuilder: colors.elementAt,
     );
-    _controller = RouletteController(vsync: this, group: group);
+    _controller = WheelController(vsync: this, group: group);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -67,8 +67,9 @@ class _WheelWidgetState extends State<WheelWidget>
         ElevatedButton(
           onPressed: () => _controller.rollTo(
             3,
+            _random.nextInt(10),
             clockwise: _clockwise,
-            offset: _random.nextDouble(),
+            offset: _random.nextDouble() * 20,
           ),
           child: const Icon(Icons.refresh_rounded),
         )
@@ -89,7 +90,7 @@ class MyRoulette extends StatelessWidget {
     required this.controller,
   }) : super(key: key);
 
-  final RouletteController controller;
+  final WheelController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +102,12 @@ class MyRoulette extends StatelessWidget {
           height: 260,
           child: Padding(
             padding: const EdgeInsets.only(top: 30),
-            child: Roulette(
-              // Provide controller to update its state
+            child: Wheel(
               controller: controller,
-              // Configure roulette's appearance
-              style: const RouletteStyle(
+              style: const WheelStyle(
                 dividerThickness: 4,
                 textLayoutBias: .8,
-                centerStickerColor: Color(0xFF45A3FA),
+                centerStickerColor: Colors.white,
               ),
             ),
           ),
