@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_group.dart';
-import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_unit.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_sector.dart';
 
 /// Создаёт анимацию из контроллера, чтобы начать эффект поворота.
 /// Конечная позиция поворота - targetValue.
@@ -24,7 +24,7 @@ Animation<double> makeAnimation(
 
 /// Вычисление значения конечного поворота с помощью targetIndex.
 /// Возвращаемое значение содержит круги, которые нужно свернуть.
-/// Убедитесь, что при запуске этого метода в [group] есть хотя бы один [WheelUnit].
+/// Убедитесь, что при запуске этого метода в [group] есть хотя бы один [WheelSector].
 ///
 /// [group] - это [WheelGroup] для запуска анимации поворота.
 /// [targetIndex] - это конечный индекс в [group].
@@ -40,23 +40,23 @@ double calculateEndRotate(
   int minRotateCircles, {
   double offset = 0,
 }) {
-  final units = group.units;
-  assert(units.isNotEmpty, 'You cannot roll an empty roulette.');
+  final sectors = group.sectors;
+  assert(sectors.isNotEmpty, 'You cannot roll an empty roulette.');
   assert(
     targetIndex >= 0 && targetIndex < group.divide,
     'targetIndex is out of group range.',
   );
   final passUnits = clockwise
-      ? units.reversed.take(group.divide - targetIndex - 1)
-      : units.take(targetIndex);
+      ? sectors.reversed.take(group.divide - targetIndex - 1)
+      : sectors.take(targetIndex);
   final preRotation = minRotateCircles * 2 * pi;
   // final totalRotateWeight = passUnits.sum((unit) => unit.weight);
   final totalRotateWeight =
-      passUnits.sum((dynamic unit) => unit.weight as double);
+      passUnits.sum((dynamic sectors) => sectors.weight as double);
   // Веса должны вращаться
   final targetRotate = 2 * pi * totalRotateWeight / group.totalWeights;
   final targetCoverRotate =
-      2 * pi * units[targetIndex].weight / group.totalWeights;
+      2 * pi * sectors[targetIndex].weight / group.totalWeights;
   var offsetValue = offset * targetCoverRotate; // Случайный поворот
   final totalRotate = preRotation + targetRotate + offsetValue;
   return clockwise ? totalRotate : -totalRotate;

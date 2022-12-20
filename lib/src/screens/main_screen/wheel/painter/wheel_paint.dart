@@ -24,7 +24,7 @@ class WheelPaint extends AnimatedWidget {
     return AspectRatio(
       aspectRatio: 1.0,
       child: CustomPaint(
-        painter: _RoulettePainter(
+        painter: _WheelPainter(
           rotate: _rotation.value,
           style: style,
           group: group,
@@ -34,8 +34,8 @@ class WheelPaint extends AnimatedWidget {
   }
 }
 
-class _RoulettePainter extends CustomPainter {
-  _RoulettePainter({
+class _WheelPainter extends CustomPainter {
+  _WheelPainter({
     required this.style,
     required this.rotate,
     required this.group,
@@ -71,19 +71,19 @@ class _RoulettePainter extends CustomPainter {
 
     double drewSweep = 0;
     for (var i = 0; i < group.divide; i++) {
-      final unit = group.units[i];
+      final unit = group.sectors[i];
       final sweep = 2 * pi * unit.weight / group.totalWeights;
 
       canvas.save();
       canvas.rotate(drewSweep);
 
-      // Рисует фон секции
+      // Рисует фон сектора
       _paint.color = unit.color;
       _paint.strokeWidth = 0;
       _paint.style = ui.PaintingStyle.fill;
       canvas.drawArc(rect, 0.0 * i, sweep, true, _paint);
 
-      // Draw the section border
+      // Рисует границы сектора
       _paint.color = style.dividerColor;
       _paint.strokeWidth = style.dividerThickness;
       _paint.style = ui.PaintingStyle.stroke;
@@ -99,7 +99,7 @@ class _RoulettePainter extends CustomPainter {
     double drewSweep = 0.0; // Drew sweep angle
     for (var i = 0; i < group.divide; i++) {
       // Рисует каждую секцию с юнитом
-      final unit = group.units[i];
+      final unit = group.sectors[i];
       final sweep = 2 * pi * unit.weight / group.totalWeights;
 
       canvas.save();
@@ -141,7 +141,7 @@ class _RoulettePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _RoulettePainter oldDelegate) =>
+  bool shouldRepaint(covariant _WheelPainter oldDelegate) =>
       oldDelegate.rotate != rotate ||
       oldDelegate.group != group ||
       oldDelegate.style != style;

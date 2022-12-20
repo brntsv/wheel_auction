@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_unit.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_sector.dart';
 
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/helpers.dart'
     show DoubleSum, IndexBuilder;
 
 /// Опишите всё колесо
 class WheelGroup {
-  /// Создайте группу колеса с заданными [units].
-  WheelGroup(this.units);
+  /// Создайте группу колеса с заданными [sectors].
+  WheelGroup(this.sectors);
 
   /// Хэлпер для создания колеса [WheelGroup].
   /// [itemCount] это количество элементов в группе.
@@ -20,26 +20,28 @@ class WheelGroup {
     IndexBuilder<String?>? textBuilder,
     IndexBuilder<Color>? colorBuilder,
     IndexBuilder<TextStyle?>? textStyleBuilder,
+    IndexBuilder<double?>? weightBuilder,
   }) {
-    final units = List.generate(
+    final sectors = List.generate(
       itemCount,
-      (index) => WheelUnit(
+      (index) => WheelSector(
         text: textBuilder?.call(index),
         textStyle: textStyleBuilder?.call(index),
         color: colorBuilder?.call(index) ?? Colors.blue,
-        weight: 1,
+        weight: weightBuilder?.call(index) ?? 1.0,
       ),
     );
-    return WheelGroup(units);
+    return WheelGroup(sectors);
   }
 
-  /// [WheelUnit]s этой группы.
-  final List<WheelUnit> units;
+  /// [WheelSector]s этой группы.
+  final List<WheelSector> sectors;
 
-  /// Общее количество весов для [units].
-  late final totalWeights = units.sum((dynamic unit) => unit.weight as double);
+  /// Общее количество веса для [sectors].
+  late final totalWeights =
+      sectors.sum((dynamic sectors) => sectors.weight as double);
   // late final totalWeights = units.sum((unit) => unit.weight);
 
-  /// Количество деталей [units].
-  int get divide => units.length;
+  /// Количество деталей [sectors].
+  int get divide => sectors.length;
 }

@@ -5,15 +5,15 @@ class WheelStyle {
   /// Стиль текста раздела по умолчанию
   static const defaultTextStyle = TextStyle(
     fontSize: 30,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.normal,
     fontFamily: 'Sans',
   );
 
   const WheelStyle({
-    this.dividerThickness = 5,
+    this.dividerThickness = 2,
     this.dividerColor = Colors.white,
-    this.centerStickerColor = Colors.black,
-    this.centerStickSizePercent = 0.1,
+    this.centerStickerColor = Colors.white,
+    this.centerStickSizePercent = 0.06,
     this.textLayoutBias = 0.85,
     this.textStyle = defaultTextStyle,
   });

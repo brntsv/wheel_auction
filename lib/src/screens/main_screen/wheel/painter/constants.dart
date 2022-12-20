@@ -1,5 +1,3 @@
-import 'dart:math';
-
 /// Вращать значения, которые использовались для имитации начала
 const int defaultMinRotateCircles = 3;
 
