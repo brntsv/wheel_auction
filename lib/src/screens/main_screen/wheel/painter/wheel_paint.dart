@@ -5,7 +5,6 @@ import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_group.
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_style.dart';
 import 'dart:ui' as ui;
 
-/// Animated roulette core by [AnimatedWidget]
 class WheelPaint extends AnimatedWidget {
   const WheelPaint({
     Key? key,
@@ -96,7 +95,7 @@ class _WheelPainter extends CustomPainter {
   }
 
   void _drawSections(Canvas canvas, double radius) {
-    double drewSweep = 0.0; // Drew sweep angle
+    double drewSweep = 0.0; // Рисует угол изгиба
     for (var i = 0; i < group.divide; i++) {
       // Рисует каждую секцию с юнитом
       final unit = group.sectors[i];
@@ -118,7 +117,7 @@ class _WheelPainter extends CustomPainter {
         ..pushStyle(textStyle.asUiTextStyle())
         ..addText(text);
 
-      // Calculate chord of circle
+      // Рассчет хорды окружности
       final chord = 2 * (radius * style.textLayoutBias) * sin(sweep / 2);
 
       final p = pb.build();
@@ -134,8 +133,8 @@ class _WheelPainter extends CustomPainter {
 
   void _drawCenterSticker(Canvas canvas, double radius) {
     _paint.color = style.centerStickerColor;
-    _paint.strokeWidth = 0;
-    _paint.style = ui.PaintingStyle.fill;
+    _paint.strokeWidth = 2;
+    _paint.style = ui.PaintingStyle.stroke;
     canvas.drawCircle(
         Offset.zero, radius * style.centerStickSizePercent, _paint);
   }

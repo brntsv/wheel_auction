@@ -65,7 +65,6 @@ class WheelController with ChangeNotifier {
     int targetIndex,
     int minRotateCircles, {
     Duration duration = defaultDuration,
-    // int minRotateCircles = defaultMinRotateCircles,
     bool clockwise = true,
     Curve? curve = Curves.fastOutSlowIn,
     double offset = 0,

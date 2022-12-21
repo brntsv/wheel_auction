@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 class WheelStyle {
   /// Стиль текста раздела по умолчанию
   static const defaultTextStyle = TextStyle(
-    fontSize: 30,
+    fontSize: 16,
     fontWeight: FontWeight.normal,
-    fontFamily: 'Sans',
   );
 
   const WheelStyle({
-    this.dividerThickness = 2,
+    this.dividerThickness = 1,
     this.dividerColor = Colors.white,
     this.centerStickerColor = Colors.white,
-    this.centerStickSizePercent = 0.06,
+    this.centerStickSizePercent = 0.2,
     this.textLayoutBias = 0.85,
     this.textStyle = defaultTextStyle,
   });
@@ -33,6 +32,6 @@ class WheelStyle {
   /// Смещение макета текста, используемое для определения того, где рисовать текст
   final double textLayoutBias;
 
-  /// Текстовый стиль [Wheel] может быть переопределен текстовым стилем [WheelUnit].
+  /// Текстовый стиль [Wheel] может быть переопределен текстовым стилем [WheelSector].
   final TextStyle textStyle;
 }
