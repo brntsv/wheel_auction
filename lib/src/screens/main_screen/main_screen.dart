@@ -14,9 +14,10 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: const [
           _TopWidget(),
+          Spacer(),
           _CenterWidget(),
           _BottomWidget(),
         ],
@@ -98,7 +99,8 @@ class _BottomWidget extends StatelessWidget {
             child: TextButton(
               onPressed: () {},
               child: Text(
-                'DeleteWinnerButton',
+                // DeleteWinnerButton
+                '',
                 style: textStyle,
                 maxLines: 1,
               ),

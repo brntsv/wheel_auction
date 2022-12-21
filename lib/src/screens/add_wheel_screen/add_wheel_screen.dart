@@ -223,7 +223,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                   minimumSize: MaterialStateProperty.all(const Size(200, 40)),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
