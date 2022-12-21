@@ -36,3 +36,8 @@ flutter:
       fonts:
         - asset: assets/fonts/Roboto-Light.ttf
           weight: 300
+    - family: Helvetica Neue
+      fonts:
+        - asset: assets/fonts/HelveticaNeueRoman.ttf
+          weight: 300
+
