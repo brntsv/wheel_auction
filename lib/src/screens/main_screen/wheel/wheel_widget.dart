@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wheel_auction/resources/app_images.dart';
+import 'package:wheel_auction/src/screens/add_wheel_screen/model/list_of_wheels_model.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/arrow.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_controller.dart';
@@ -18,60 +21,152 @@ class _WheelWidgetState extends State<WheelWidget>
     with SingleTickerProviderStateMixin {
   static final _random = Random();
 
-  late WheelController _controller;
-  bool _clockwise = true;
+  late WheelController wheelController;
+  // bool _clockwise = true;
 
   final colors = <Color>[
-    Colors.red.withAlpha(50),
-    Colors.green.withAlpha(30),
-    Colors.blue.withAlpha(70),
-    Colors.yellow.withAlpha(90),
-    Colors.amber.withAlpha(50),
-    Colors.indigo.withAlpha(70),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
+  ];
+
+  // final colors = <Color>[
+  //   const Color(0xffeb3b),
+  //   const Color(0xb0bec5),
+  //   const Color(0x78909c),
+  //   const Color(0x455a64),
+  //   const Color(0x263238),
+  //   const Color(0x48696d),
+  //   const Color(0x2f6b7d),
+  //   const Color(0x8C4F4F),
+  //   const Color(0xBB9C9C),
+  //   const Color(0xC55454),
+  //   const Color(0xf48fb1),
+  //   const Color(0xff3c3c),
+  //   const Color(0x6fdd6f),
+  //   const Color(0x6cc16c),
+  //   const Color(0xf39b4b),
+  //   const Color(0xb285ff),
+  // ];
+
+  final text = <String>[
+    'data',
+    'data 19191',
+    'data asddas',
+    'data',
+    'data',
+    'dataddd ff',
+    'data',
+    'data',
+    'data',
+    'data',
+    'data',
+    'data',
+    'data',
+    'data',
+    'data',
+    'data',
+  ];
+
+  final weight = <double>[
+    1.0,
+    4.0,
+    3.0,
+    2.5,
+    0.5,
+    4.0,
+    1.0,
+    2.0,
+    1.0,
+    2.0,
+    7.0,
+    2.5,
+    1.5,
+    6.0,
+    1.0,
+    2.0,
   ];
 
   @override
   void initState() {
+    // final provider = context.watch<ListOfWheelsModel>();
+    // final events = provider.events.isNotEmpty ? provider.events.last : [''];
+
     // инициализация контроллера
     final group = WheelGroup.uniform(
       colors.length,
       colorBuilder: colors.elementAt,
+      textBuilder: text.elementAt,
+      weightBuilder: weight.elementAt,
     );
-    _controller = WheelController(vsync: this, group: group);
+    wheelController = WheelController(vsync: this, group: group);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Clockwise: ',
-              style: TextStyle(fontSize: 18),
-            ),
-            Switch(
-              value: _clockwise,
-              onChanged: (onChanged) {
-                setState(() {
-                  _controller.resetAnimation();
-                  _clockwise = !_clockwise;
-                });
-              },
-            ),
-          ],
+        // Row(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        // const Text(
+        //   'Clockwise: ',
+        //   style: TextStyle(fontSize: 18),
+        // ),
+        // Switch(
+        //   value: _clockwise,
+        //   onChanged: (onChanged) {
+        //     setState(() {
+        //       _controller.resetAnimation();
+        //       _clockwise = !_clockwise;
+        //     });
+        //   },
+        // ),
+        //   ],
+        // ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 80,
+          ),
+          child: MyWheel(controller: wheelController),
         ),
-        MyRoulette(controller: _controller),
         ElevatedButton(
-          onPressed: () => _controller.rollTo(
+          onPressed: () => wheelController.rollTo(
             3,
             _random.nextInt(10),
-            clockwise: _clockwise,
+            // провайдером передать из настроек
+            // clockwise: _clockwise,
             offset: _random.nextDouble() * 20,
           ),
-          child: const Icon(Icons.refresh_rounded),
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStatePropertyAll<Color>(theme.primaryColor),
+            minimumSize: MaterialStateProperty.all(const Size(95, 40)),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(7),
+              ),
+            ),
+          ),
+          child: Text('КРУТИТЬ', style: theme.textTheme.button),
         )
       ],
     );
@@ -79,13 +174,13 @@ class _WheelWidgetState extends State<WheelWidget>
 
   @override
   void dispose() {
-    _controller.dispose();
+    wheelController.dispose();
     super.dispose();
   }
 }
 
-class MyRoulette extends StatelessWidget {
-  const MyRoulette({
+class MyWheel extends StatelessWidget {
+  const MyWheel({
     Key? key,
     required this.controller,
   }) : super(key: key);
@@ -95,142 +190,33 @@ class MyRoulette extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.topCenter,
       children: [
-        SizedBox(
-          width: 260,
-          height: 260,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Wheel(
-              controller: controller,
-              style: const WheelStyle(
-                dividerThickness: 4,
-                textLayoutBias: .8,
-                centerStickerColor: Colors.white,
-              ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Wheel(
+            controller: controller,
+            style: const WheelStyle(
+              dividerThickness: 2,
+              dividerColor: Color(0xFFEEEEEE),
+              centerStickerColor: Color(0xFFEEEEEE),
             ),
           ),
         ),
-        const Arrow(),
+        const Align(
+          alignment: Alignment.topCenter,
+          child: Arrow(),
+        ),
+        const Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              foregroundImage: AssetImage(AppImages.pepegaCoolman),
+              radius: 35,
+            ),
+          ),
+        ),
       ],
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/// Вариант отрисовки секторов
-// class _SectorsPainter extends CustomPainter {
-//   final List<bool> availableSectors;
-//   final int selectedSector;
-
-//   _SectorsPainter({
-//     required this.availableSectors,
-//     required this.selectedSector,
-//   });
-
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     final strokeWidth = size.width / 4;
-//     final rect = Rect.fromCenter(
-//         center: Offset(size.width / 2, size.height / 2),
-//         height: size.height - strokeWidth,
-//         width: size.width - strokeWidth);
-
-//     for (var i = 0; i < availableSectors.length; i++) {
-//       final paint = Paint()
-//         ..color = availableSectors[i] ? Colors.grey : Colors.black
-//         ..style = PaintingStyle.stroke
-//         ..strokeWidth = strokeWidth;
-
-//       canvas.drawArc(
-//         rect,
-//         2 * pi * i / availableSectors.length,
-//         2 * pi / availableSectors.length * 0.95, //5% просвет между секторами
-//         false,
-//         paint,
-//       );
-//     }
-//   }
-
-//   @override
-//   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-//     // TODO: implement shouldRepaint
-//     throw UnimplementedError();
-//   }
-// }
