@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_controller.dart';
 import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/settings_of_wheel_button/settings_data_provider.dart';
 import 'package:wheel_auction/src/screens/settings_of_chosen_screen/settings_of_chosen_wheel.dart';
 import 'package:wheel_auction/src/theme/app_text_style.dart';
@@ -14,6 +15,9 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
   bool _isSwitched = false;
   double _currentSliderValue = 20;
   final _servicePreferences = SettingsDataProvider();
+
+  // late WheelController wheelController;
+  bool _clockwise = true;
 
   @override
   void initState() {
@@ -71,7 +75,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                         SizedBox(
                           width: double.infinity,
                           child: Card(
-                            color: Theme.of(context).cardColor,
+                            color: theme.cardColor,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -103,7 +107,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                       value: _isSwitched,
                                       onChanged: (newValue) {
                                         setState(() {
-                                          _isSwitched = newValue;
+                                          _isSwitched = !_isSwitched;
                                         });
                                         _saveValue();
                                       },
@@ -186,6 +190,52 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                     ],
                                   ),
                                 ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            color: theme.cardColor,
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(15),
+                              splashColor: Colors.white.withAlpha(30),
+                              onTap: () {
+                                setState(() {
+                                  if (_clockwise == true) {
+                                    _clockwise = false;
+                                  } else if (_clockwise == false) {
+                                    _clockwise = true;
+                                  }
+                                });
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 5),
+                                child: Row(
+                                  children: [
+                                    const Text(
+                                      'Смена направления',
+                                      style: AppTextStyle.cardSettingsWheel,
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                    const Spacer(),
+                                    Switch(
+                                      value: _clockwise,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          // wheelController.resetAnimation();
+                                          _clockwise = !_clockwise;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
