@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wheel_auction/resources/app_fonts.dart';
 import 'package:wheel_auction/src/theme/app_text_style.dart';
 
 class AppTheme {
-  static const _defaultFontFamily = 'Roboto';
-
   static final darkTheme = ThemeData(
     colorScheme: const ColorScheme.dark(),
     brightness: Brightness.dark,
@@ -22,7 +21,7 @@ class AppTheme {
       color: AppColors.backgroundLight,
       size: 30,
     ),
-    fontFamily: _defaultFontFamily,
+    fontFamily: AppFonts.helveticaNeue,
     textTheme: const TextTheme(
       button: AppTextStyle.buttonText,
       bodyText2: AppTextStyle.listWheelsButtonDark,
@@ -48,7 +47,7 @@ class AppTheme {
       color: AppColors.backgroundDark,
       size: 32,
     ),
-    fontFamily: _defaultFontFamily,
+    fontFamily: AppFonts.helveticaNeue,
     textTheme: const TextTheme(
       button: AppTextStyle.buttonText,
       bodyText2: AppTextStyle.listWheelsButtonLight,
