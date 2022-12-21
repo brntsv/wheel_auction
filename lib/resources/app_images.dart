@@ -4,6 +4,7 @@ class AppImages {
   static const String blackCat = 'assets/images/black_cat.webp';
   static const String clap = 'assets/images/clap.gif';
   static const String duck = 'assets/images/duck.webp';
+  static const String hesus = 'assets/images/hesus.webp';
   static const String jillette = 'assets/images/jillette.webp';
   static const String papich = 'assets/images/papich.webp';
   static const String pepegaBusiness = 'assets/images/pepega_business.webp';
