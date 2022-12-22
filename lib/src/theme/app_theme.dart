@@ -17,6 +17,7 @@ class AppTheme {
       foregroundColor: Colors.white,
       backgroundColor: AppColors.purpleDominant,
     ),
+    dividerColor: AppColors.primaryLight,
     iconTheme: const IconThemeData(
       color: AppColors.backgroundLight,
       size: 30,
@@ -43,6 +44,7 @@ class AppTheme {
       foregroundColor: Colors.white,
       backgroundColor: AppColors.purpleDominant,
     ),
+    dividerColor: AppColors.backgroundDark,
     iconTheme: const IconThemeData(
       color: AppColors.backgroundDark,
       size: 32,
@@ -69,3 +71,45 @@ abstract class AppColors {
   static const primaryLight = Color(0xFFEEEEEE);
   static const cardLight = Color(0xFFEEEEEE);
 }
+
+/// Цвета для колеса
+final colorsWheelExampl = <String>[
+  '#00b6ac',
+  '#4a91ae',
+  '#63c575',
+  '#f85842',
+  '#5d60e2',
+  '#e58221',
+  '#966062',
+  '#7daee8',
+  '#6690ad',
+  '#2a8bea',
+  '#e385cf',
+  '#e35182',
+  '#36b5e9',
+  '#355f56',
+  '#375f4e',
+  '#519cc0',
+  '#d17175',
+  '#b062e7',
+  '#abcc9e',
+  '#80c18b',
+  '#717ff6',
+  '#7c9f30',
+  '#c3747f',
+  '#ea5461',
+  '#b87dc8',
+  '#978fbc',
+  '#df5f56',
+  '#f3bf41',
+  '#FFCE24',
+  '#EA631D',
+  '#E33055',
+  '#0085CB',
+  '#275483',
+  '#3CB787',
+  '#80A649',
+  '#E3904C',
+  '#C94D51',
+  '#5B4749',
+];
