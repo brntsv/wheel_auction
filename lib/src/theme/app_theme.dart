@@ -70,6 +70,47 @@ abstract class AppColors {
   static const backgroundLight = Color(0xFFE0E0E0);
   static const primaryLight = Color(0xFFEEEEEE);
   static const cardLight = Color(0xFFEEEEEE);
+
+  static const colorsWheel = <Color>[
+    Color(0xFF00B6AC),
+    Color(0xFF4A91AE),
+    Color(0xFF63C575),
+    Color(0xFFF85842),
+    Color(0xFF5D60E2),
+    Color(0xFFE58221),
+    Color(0xFF966062),
+    Color(0xFF7DAEE8),
+    Color(0xFF6690AD),
+    Color(0xFF2A8BEA),
+    Color(0xFFE385CF),
+    Color(0xFFE35182),
+    Color(0xFF36B5E9),
+    Color(0xFF355F56),
+    Color(0xFF375F4E),
+    Color(0xFF519CC0),
+    Color(0xFFD17175),
+    Color(0xFFB062E7),
+    Color(0xFFABCC9E),
+    Color(0xFF80C18B),
+    Color(0xFF717FF6),
+    Color(0xFF7c9f30),
+    Color(0xFFC3747F),
+    Color(0xFFEA5461),
+    Color(0xFFB87DC8),
+    Color(0xFF978FBC),
+    Color(0xFFDF5F56),
+    Color(0xFFF3BF41),
+    Color(0xFFFFCE24),
+    Color(0xFFEA631D),
+    Color(0xFFE33055),
+    Color(0xFF0085CB),
+    Color(0xFF275483),
+    Color(0xFF3CB787),
+    Color(0xFF80A649),
+    Color(0xFFE3904C),
+    Color(0xFFC94D51),
+    Color(0xFF5B4749),
+  ];
 }
 
 /// Цвета для колеса
