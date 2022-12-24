@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_sector.dart';
 
@@ -18,7 +20,8 @@ class WheelGroup {
   factory WheelGroup.uniform(
     int itemCount, {
     IndexBuilder<String?>? textBuilder,
-    IndexBuilder<Color>? colorBuilder,
+    // IndexBuilder<Color>? colorBuilder,
+    List<Color>? colorBuilder,
     IndexBuilder<TextStyle?>? textStyleBuilder,
     IndexBuilder<double?>? weightBuilder,
   }) {
@@ -27,7 +30,8 @@ class WheelGroup {
       (index) => WheelSector(
         text: textBuilder?.call(index),
         textStyle: textStyleBuilder?.call(index),
-        color: colorBuilder?.call(index) ?? Colors.blue,
+        // color: colorBuilder?.call(index) ?? Colors.blue,
+        color: colorBuilder![Random().nextInt(colorBuilder.length)],
         weight: weightBuilder?.call(index) ?? 1.0,
       ),
     );

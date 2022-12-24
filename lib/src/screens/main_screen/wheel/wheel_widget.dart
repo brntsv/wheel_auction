@@ -197,7 +197,7 @@ class _WheelWidgetState extends State<WheelWidget>
     // инициализация контроллера
     final group = WheelGroup.uniform(
       colorsWheel.length,
-      colorBuilder: colorsWheel.elementAt,
+      colorBuilder: colorsWheel,
       //colorsWheel[Random().nextInt(colorsWheel.length)],
       textBuilder: text.elementAt,
       // weightBuilder: weight.elementAt,
