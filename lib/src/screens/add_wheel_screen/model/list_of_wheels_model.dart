@@ -21,7 +21,7 @@ class ListOfWheelsModel with ChangeNotifier {
 
   /// метод добавления событий колеса в список событий
   void addListOfEvents(List<String?> listOfEvents) {
-    _listEvents.add(listOfEvents);
+    _listEvents.insert(0, listOfEvents);
     notifyListeners();
   }
 }
