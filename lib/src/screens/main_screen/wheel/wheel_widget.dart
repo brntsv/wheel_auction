@@ -19,68 +19,13 @@ class WheelWidget extends StatefulWidget {
 }
 
 class _WheelWidgetState extends State<WheelWidget>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   static final _random = Random();
 
   late WheelController wheelController;
   // bool _clockwise = true;
 
-  final text = <String>[
-    'Кишлак',
-    'Нойз МС',
-    'boulevard depo',
-    'Букер',
-    'ssshhhiiittt',
-    'plaksasadsa',
-    'Дурик',
-    'тима ищет свет',
-    'Свидание',
-    'Галантерея',
-    'Пирокинезис',
-    'i61',
-    'Шизоид',
-    'СЕРЕГА ПИРАТ',
-    'Чудик',
-    'Моргенштерн',
-    'Кишлак',
-    'Нойз МС',
-  ];
-
   // final weight = <double>[
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   5.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
   //   1.0,
   //   1.0,
   //   1.0,
@@ -89,23 +34,86 @@ class _WheelWidgetState extends State<WheelWidget>
 
   @override
   void initState() {
-    // final provider = context.watch<ListOfWheelsModel>();
-    // final events = provider.events.isNotEmpty ? provider.events.last : [''];
+    final provider = context.read<ListOfWheelsModel>();
+    final events = provider.events.isNotEmpty
+        ? provider.events.first
+        : [
+            'I`m',
+            'Flutter',
+            'Developer',
+            'local',
+            'MANTRA -',
+            'Everything...',
+            'is WIDGET',
+            'Hey'
+          ];
 
     // инициализация контроллера
     final group = WheelGroup.uniform(
-      text.length,
+      events.length,
       colorBuilder: AppColors.colorsWheel,
-      textBuilder: text.elementAt,
+      textBuilder: events.elementAt,
       // weightBuilder: weight.elementAt,
     );
     wheelController = WheelController(vsync: this, group: group);
     super.initState();
   }
 
+  // @override
+  // void didUpdateWidget(covariant WheelWidget oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+
+  //   final provider = context.watch<ListOfWheelsModel>();
+  //   final events = provider.events.first;
+
+  //   if (provider.events.isNotEmpty) {
+  //     final group = WheelGroup.uniform(
+  //       events.length,
+  //       colorBuilder: AppColors.colorsWheel,
+  //       textBuilder: events.elementAt,
+  //       // weightBuilder: weight.elementAt,
+  //     );
+  //     wheelController = WheelController(vsync: this, group: group);
+  //   } else if (provider.events.isEmpty) {
+  //     return;
+  //   }
+  // }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final provider = context.read<ListOfWheelsModel>();
+
+    if (provider.events.isNotEmpty) {
+      final events = provider.events.first;
+      final group = WheelGroup.uniform(
+        events.length,
+        colorBuilder: AppColors.colorsWheel,
+        textBuilder: events.elementAt,
+        // weightBuilder: weight.elementAt,
+      );
+      wheelController = WheelController(vsync: this, group: group);
+    } else if (provider.events.isEmpty) {
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final provider = context.watch<ListOfWheelsModel>();
+    final events = provider.events.isNotEmpty ? provider.events.first : [''];
+
+    // final group = WheelGroup.uniform(
+    //   events.length,
+    //   colorBuilder: AppColors.colorsWheel,
+    //   // colorBuilder: AppColors.colorsWheel,
+    //   textBuilder: events.elementAt,
+    //   // weightBuilder: weight.elementAt,
+    // );
+    // wheelController = WheelController(vsync: this, group: group);
 
     return Column(
       children: [
@@ -137,8 +145,10 @@ class _WheelWidgetState extends State<WheelWidget>
         ),
         ElevatedButton(
           onPressed: () => wheelController.rollTo(
-            3,
+            events.length - 1,
             _random.nextInt(10),
+            // provider.events.first.length - 1,
+
             // TODO провайдером передать из настроек
             // clockwise: _clockwise,
             offset: _random.nextDouble() * 20,

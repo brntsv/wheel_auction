@@ -30,7 +30,7 @@ class WheelGroup {
       (index) => WheelSector(
         text: textBuilder?.call(index),
         textStyle: textStyleBuilder?.call(index),
-        // color: colorBuilder?.call(index) ?? Colors.blue,
+        // color: colorBuilder?.call(index) ?? Colors.transparent,
         color: colorBuilder![Random().nextInt(colorBuilder.length)],
         weight: weightBuilder?.call(index) ?? 1.0,
       ),
