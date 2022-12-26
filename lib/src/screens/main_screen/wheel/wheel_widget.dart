@@ -38,14 +38,14 @@ class _WheelWidgetState extends State<WheelWidget>
     final events = provider.events.isNotEmpty
         ? provider.events.first
         : [
-            'I`m',
             'Flutter',
             'Developer',
             'local',
             'MANTRA -',
             'Everything...',
             'is WIDGET',
-            'Hey'
+            'Hey',
+            'I`m',
           ];
 
     // инициализация контроллера
@@ -59,61 +59,36 @@ class _WheelWidgetState extends State<WheelWidget>
     super.initState();
   }
 
-  // @override
-  // void didUpdateWidget(covariant WheelWidget oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-
-  //   final provider = context.watch<ListOfWheelsModel>();
-  //   final events = provider.events.first;
-
-  //   if (provider.events.isNotEmpty) {
-  //     final group = WheelGroup.uniform(
-  //       events.length,
-  //       colorBuilder: AppColors.colorsWheel,
-  //       textBuilder: events.elementAt,
-  //       // weightBuilder: weight.elementAt,
-  //     );
-  //     wheelController = WheelController(vsync: this, group: group);
-  //   } else if (provider.events.isEmpty) {
-  //     return;
-  //   }
-  // }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final provider = context.read<ListOfWheelsModel>();
+    final provider = context.watch<ListOfWheelsModel>();
 
-    if (provider.events.isNotEmpty) {
-      final events = provider.events.first;
-      final group = WheelGroup.uniform(
-        events.length,
-        colorBuilder: AppColors.colorsWheel,
-        textBuilder: events.elementAt,
-        // weightBuilder: weight.elementAt,
-      );
-      wheelController = WheelController(vsync: this, group: group);
-    } else if (provider.events.isEmpty) {
-      return;
-    }
+    provider.addListener(() {
+      if (provider.events.isNotEmpty) {
+        wheelController.dispose();
+        final events = provider.events.first;
+        final group = WheelGroup.uniform(
+          events.length,
+          colorBuilder: AppColors.colorsWheel,
+          textBuilder: events.elementAt,
+          // weightBuilder: weight.elementAt,
+        );
+        wheelController = WheelController(vsync: this, group: group);
+      } else if (provider.events.isEmpty) {
+        return;
+      }
+      setState(() {});
+    });
+    wheelController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    final provider = context.watch<ListOfWheelsModel>();
-    final events = provider.events.isNotEmpty ? provider.events.first : [''];
-
-    // final group = WheelGroup.uniform(
-    //   events.length,
-    //   colorBuilder: AppColors.colorsWheel,
-    //   // colorBuilder: AppColors.colorsWheel,
-    //   textBuilder: events.elementAt,
-    //   // weightBuilder: weight.elementAt,
-    // );
-    // wheelController = WheelController(vsync: this, group: group);
 
     return Column(
       children: [
@@ -145,7 +120,7 @@ class _WheelWidgetState extends State<WheelWidget>
         ),
         ElevatedButton(
           onPressed: () => wheelController.rollTo(
-            events.length - 1,
+            1,
             _random.nextInt(10),
             // provider.events.first.length - 1,
 
@@ -171,6 +146,9 @@ class _WheelWidgetState extends State<WheelWidget>
 
   @override
   void dispose() {
+    final provider = context.read<ListOfWheelsModel>();
+    provider.removeListener(() {});
+    wheelController.removeListener(() {});
     wheelController.dispose();
     super.dispose();
   }
@@ -211,7 +189,7 @@ class MyWheel extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: AppColors.transparent,
               foregroundImage: AssetImage(AppImages.whiteCat),
-              radius: 35,
+              maxRadius: 35,
             ),
           ),
         ),
