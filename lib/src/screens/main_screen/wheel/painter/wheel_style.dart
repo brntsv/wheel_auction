@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wheel_auction/resources/app_fonts.dart';
+import 'package:wheel_auction/src/theme/app_text_style.dart';
 
 /// Опишите стиль рендеринга рулетки.
 class WheelStyle {
   /// Стиль текста раздела по умолчанию
-  static const defaultTextStyle = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.normal,
-  );
+  static const defaultTextStyle = AppTextStyle.wheelSectorsText;
 
   const WheelStyle({
     this.dividerThickness = 1,

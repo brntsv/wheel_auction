@@ -26,7 +26,7 @@ abstract class AppTextStyle {
     fontSize: 20,
     fontWeight: FontWeight.w300,
     fontStyle: FontStyle.normal,
-    // fontFamily: AppFonts.basisGrotesqueProRegular,
+    // fontFamily: AppFonts.helveticaNeue,
     height: 1.33,
     letterSpacing: 1,
   );
@@ -36,7 +36,7 @@ abstract class AppTextStyle {
     fontSize: 20,
     fontWeight: FontWeight.w900,
     fontStyle: FontStyle.normal,
-    // fontFamily: AppFonts.basisGrotesqueProRegular,
+    // fontFamily: AppFonts.helveticaNeue,
     height: 1.33,
     letterSpacing: 1,
   );
@@ -45,7 +45,7 @@ abstract class AppTextStyle {
     fontSize: 17,
     fontWeight: FontWeight.w300,
     fontStyle: FontStyle.normal,
-    // fontFamily: AppFonts.basisGrotesqueProRegular,
+    // fontFamily: AppFonts.helveticaNeue,
     height: 1.25,
     letterSpacing: 1,
   );
@@ -55,7 +55,7 @@ abstract class AppTextStyle {
     fontSize: 15,
     fontWeight: FontWeight.w500,
     fontStyle: FontStyle.normal,
-    // fontFamily: AppFonts.basisGrotesqueProRegular,
+    // fontFamily: AppFonts.helveticaNeue,
     height: 1.25,
     letterSpacing: 2,
   );
@@ -64,7 +64,7 @@ abstract class AppTextStyle {
     fontSize: 18,
     fontWeight: FontWeight.w300,
     fontStyle: FontStyle.normal,
-    // fontFamily: AppFonts.basisGrotesqueProRegular,
+    // fontFamily: AppFonts.helveticaNeue,
     height: 1.25,
     letterSpacing: 1,
   );
@@ -73,7 +73,16 @@ abstract class AppTextStyle {
     fontSize: 23,
     fontWeight: FontWeight.w300,
     fontStyle: FontStyle.normal,
-    // fontFamily: AppFonts.basisGrotesqueProRegular,
+    // fontFamily: AppFonts.helveticaNeue,
+    height: 1.25,
+    letterSpacing: 1,
+  );
+
+  static const wheelSectorsText = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    fontStyle: FontStyle.normal,
+    fontFamily: AppFonts.helveticaNeue,
     height: 1.25,
     letterSpacing: 1,
   );
