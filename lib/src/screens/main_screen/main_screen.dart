@@ -17,7 +17,7 @@ class MainScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: const [
           _TopWidget(),
-          Spacer(),
+          Spacer(flex: 1),
           _CenterWidget(),
           _BottomWidget(),
         ],
