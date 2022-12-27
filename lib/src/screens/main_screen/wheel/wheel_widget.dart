@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:wheel_auction/resources/app_images.dart';
 import 'package:wheel_auction/src/screens/add_wheel_screen/model/list_of_wheels_model.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/arrow.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/constants.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_controller.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_group.dart';
@@ -35,18 +36,8 @@ class _WheelWidgetState extends State<WheelWidget>
   @override
   void initState() {
     final provider = context.read<ListOfWheelsModel>();
-    final events = provider.events.isNotEmpty
-        ? provider.events.first
-        : [
-            'Flutter',
-            'Developer',
-            'local',
-            'MANTRA -',
-            'Everything...',
-            'is WIDGET',
-            'Hey',
-            'I`m',
-          ];
+    final events =
+        provider.events.isNotEmpty ? provider.events.first : Default.events;
 
     // инициализация контроллера
     final group = WheelGroup.uniform(
@@ -126,7 +117,7 @@ class _WheelWidgetState extends State<WheelWidget>
 
             // TODO провайдером передать из настроек
             // clockwise: _clockwise,
-            offset: _random.nextDouble() * 20,
+            offset: _random.nextDouble() * 25,
           ),
           style: ButtonStyle(
             backgroundColor:
