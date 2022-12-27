@@ -46,6 +46,6 @@ class WheelGroup {
       sectors.sum((dynamic sectors) => sectors.weight as double);
   // late final totalWeights = units.sum((unit) => unit.weight);
 
-  /// Количество деталей [sectors].
+  /// Количество секторов [sectors].
   int get divide => sectors.length;
 }

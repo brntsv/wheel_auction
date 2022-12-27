@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -24,6 +25,11 @@ class _WheelWidgetState extends State<WheelWidget>
   static final _random = Random();
 
   late WheelController wheelController;
+
+  // late int _currentSector;
+
+  StreamController streamController = StreamController<String>();
+
   // bool _clockwise = true;
 
   // final weight = <double>[
@@ -35,9 +41,8 @@ class _WheelWidgetState extends State<WheelWidget>
 
   @override
   void initState() {
-    final provider = context.read<ListOfWheelsModel>();
-    final events =
-        provider.events.isNotEmpty ? provider.events.first : Default.events;
+    final eventsList = context.read<ListOfWheelsModel>().events;
+    final events = eventsList.isNotEmpty ? eventsList.first : Default.events;
 
     // инициализация контроллера
     final group = WheelGroup.uniform(
@@ -80,6 +85,8 @@ class _WheelWidgetState extends State<WheelWidget>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final events = context.read<ListOfWheelsModel>().events;
+    final countSectors = events.isNotEmpty ? events.first.length : 10;
 
     return Column(
       children: [
@@ -111,13 +118,12 @@ class _WheelWidgetState extends State<WheelWidget>
         ),
         ElevatedButton(
           onPressed: () => wheelController.rollTo(
-            1,
-            _random.nextInt(10),
-            // provider.events.first.length - 1,
+            events.isNotEmpty ? countSectors ~/ 2 : 0,
+            _random.nextInt(countSectors) + countSectors ~/ 2,
 
             // TODO провайдером передать из настроек
             // clockwise: _clockwise,
-            offset: _random.nextDouble() * 25,
+            offset: _random.nextDouble() * pi * 2,
           ),
           style: ButtonStyle(
             backgroundColor:
