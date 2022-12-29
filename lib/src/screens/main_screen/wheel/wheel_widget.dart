@@ -26,8 +26,6 @@ class _WheelWidgetState extends State<WheelWidget>
 
   late WheelController wheelController;
 
-  // late int _currentSector;
-
   StreamController streamController = StreamController<String>();
 
   // bool _clockwise = true;
@@ -185,7 +183,7 @@ class MyWheel extends StatelessWidget {
             alignment: Alignment.center,
             child: CircleAvatar(
               backgroundColor: AppColors.transparent,
-              foregroundImage: AssetImage(AppImages.whiteCat),
+              foregroundImage: AssetImage(AppImages.papich),
               maxRadius: 35,
             ),
           ),

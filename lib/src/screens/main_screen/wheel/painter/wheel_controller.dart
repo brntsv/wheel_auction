@@ -42,14 +42,14 @@ class WheelController with ChangeNotifier {
     _controller.reset();
   }
 
-  /// Вернуть анимацию в исходное состояние
+  /// Вернуть анимацию в исходное состояние //? не используется
   void resetAnimation() {
     _animation = _controller.drive(ConstantTween<double>(0));
     notifyListeners();
     _controller.reset();
   }
 
-  /// Остановить текущую запущенную анимацию
+  /// Остановить текущую запущенную анимацию //? не используется
   void stop({bool canceled = true}) {
     _controller.stop(canceled: canceled);
   }

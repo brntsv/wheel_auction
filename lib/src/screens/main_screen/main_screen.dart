@@ -66,7 +66,6 @@ class _TopWidget extends StatelessWidget {
 
 class _CenterWidget extends StatelessWidget {
   const _CenterWidget({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Column(
