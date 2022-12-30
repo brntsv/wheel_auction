@@ -115,14 +115,17 @@ class _WheelWidgetState extends State<WheelWidget>
           child: MyWheel(controller: wheelController),
         ),
         ElevatedButton(
-          onPressed: () => wheelController.rollTo(
-            events.isNotEmpty ? countSectors ~/ 2 : 0,
-            _random.nextInt(countSectors) + countSectors ~/ 2,
+          onPressed: () {
+            wheelController.rollTo(
+              events.isNotEmpty ? countSectors ~/ 2 : 0,
+              _random.nextInt(countSectors) + countSectors ~/ 2,
 
-            // TODO провайдером передать из настроек
-            // clockwise: _clockwise,
-            offset: _random.nextDouble() * pi * 2,
-          ),
+              // TODO провайдером передать из настроек
+              // clockwise: _clockwise,
+              offset: _random.nextDouble() * pi * 2,
+            );
+            // streamController.sink.addStream(stream);
+          },
           style: ButtonStyle(
             backgroundColor:
                 MaterialStatePropertyAll<Color>(theme.primaryColor),
@@ -150,10 +153,7 @@ class _WheelWidgetState extends State<WheelWidget>
 }
 
 class MyWheel extends StatelessWidget {
-  const MyWheel({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
+  const MyWheel({Key? key, required this.controller}) : super(key: key);
 
   final WheelController controller;
 
@@ -183,7 +183,7 @@ class MyWheel extends StatelessWidget {
             alignment: Alignment.center,
             child: CircleAvatar(
               backgroundColor: AppColors.transparent,
-              foregroundImage: AssetImage(AppImages.papich),
+              foregroundImage: AssetImage(AppImages.hesus),
               maxRadius: 35,
             ),
           ),

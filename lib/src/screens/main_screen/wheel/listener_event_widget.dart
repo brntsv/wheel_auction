@@ -12,11 +12,11 @@ class ListenerEventWidget extends StatefulWidget {
 }
 
 class _ListenerEventWidgetState extends State<ListenerEventWidget> {
-  final StreamController<int> _dividerController = StreamController<int>();
+  final StreamController<int> streamController = StreamController<int>();
 
   @override
   void dispose() {
-    _dividerController.close();
+    streamController.close();
     super.dispose();
   }
 
@@ -26,7 +26,7 @@ class _ListenerEventWidgetState extends State<ListenerEventWidget> {
       children: [
         const Text('ListEvent'),
         // StreamBuilder(
-        //   stream: _dividerController.stream,
+        //   stream: streamController.stream,
         //   builder: (context, snapshot) =>
         //       snapshot.hasData ? WheelEvent(snapshot.data) : Container(),
         // ),
