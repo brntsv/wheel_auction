@@ -4,7 +4,7 @@ import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_paint.
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_style.dart';
 
 /// Это анимируемый виджет колеса.
-/// Вам необходимо представить [WheelController] для управления этим виджетом.
+/// Добавляем [WheelController] для управления этим виджетом.
 class Wheel extends StatefulWidget {
   const Wheel({
     Key? key,

@@ -112,7 +112,7 @@ class _WheelWidgetState extends State<WheelWidget>
             right: 20,
             top: 80,
           ),
-          child: MyWheel(controller: wheelController),
+          child: MyWheel(wheelController: wheelController),
         ),
         ElevatedButton(
           onPressed: () {
@@ -153,9 +153,9 @@ class _WheelWidgetState extends State<WheelWidget>
 }
 
 class MyWheel extends StatelessWidget {
-  const MyWheel({Key? key, required this.controller}) : super(key: key);
+  const MyWheel({Key? key, required this.wheelController}) : super(key: key);
 
-  final WheelController controller;
+  final WheelController wheelController;
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class MyWheel extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15),
           child: Wheel(
-            controller: controller,
+            controller: wheelController,
             style: WheelStyle(
               dividerThickness: 1.5,
               dividerColor: theme.dividerColor,
