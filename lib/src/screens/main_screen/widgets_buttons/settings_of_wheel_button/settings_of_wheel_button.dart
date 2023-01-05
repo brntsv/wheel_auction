@@ -48,7 +48,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
     final theme = Theme.of(context);
 
     var clockwise = context.read<SettingsOfWheelModel>().clockwise;
-    final settingsProvider = context.watch<SettingsOfWheelModel>();
+    final settings = context.watch<SettingsOfWheelModel>();
 
     return IconButton(
       onPressed: () {
@@ -234,10 +234,9 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                       onChanged: (newValue) {
                                         setState(() {
                                           // wheelController.resetAnimation();
-                                          clockwise = !clockwise;
+                                          clockwise = newValue;
                                         });
-                                        settingsProvider
-                                            .changeDirectionRoll(newValue);
+                                        settings.changeDirectionRoll(newValue);
                                       },
                                     ),
                                   ],
