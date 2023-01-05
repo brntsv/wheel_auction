@@ -5,7 +5,7 @@ class SettingsOfWheelModel extends ChangeNotifier {
   bool get clockwise => selectedDirection == false;
 
   void changeDirectionRoll(bool isOn) {
-    selectedDirection = isOn ? false : true;
+    selectedDirection = isOn ? true : false;
     notifyListeners();
   }
 }

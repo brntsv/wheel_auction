@@ -15,6 +15,7 @@ class SettingsOfWheelButton extends StatefulWidget {
 class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
   bool _isSwitched = false;
   double _currentSliderValue = 20;
+  bool _clockwise = false;
   final _servicePreferences = SettingsDataSaver();
 
   // late WheelController wheelController;
@@ -31,6 +32,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
     setState(() {
       _isSwitched = settings.isSwitched;
       _currentSliderValue = settings.currentSliderValue;
+      _clockwise = settings.clockwise;
     });
   }
 
@@ -38,16 +40,16 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
     final newSettings = Settings(
       isSwitched: _isSwitched,
       currentSliderValue: _currentSliderValue,
+      clockwise: _clockwise,
     );
     _servicePreferences.saveToggleValue(newSettings);
     _servicePreferences.saveSliderValue(newSettings);
+    _servicePreferences.saveClockwise(newSettings);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    var clockwise = context.read<SettingsOfWheelModel>().clockwise;
     final settings = context.watch<SettingsOfWheelModel>();
 
     return IconButton(
@@ -211,10 +213,10 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                               splashColor: Colors.white.withAlpha(30),
                               onTap: () {
                                 setState(() {
-                                  if (clockwise == true) {
-                                    clockwise = false;
-                                  } else if (clockwise == false) {
-                                    clockwise = true;
+                                  if (_clockwise == true) {
+                                    _clockwise = false;
+                                  } else if (_clockwise == false) {
+                                    _clockwise = true;
                                   }
                                 });
                               },
@@ -230,11 +232,11 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                     ),
                                     const Spacer(),
                                     Switch(
-                                      value: clockwise,
-                                      onChanged: (newValue) {
+                                      value: _clockwise,
+                                      onChanged: (bool newValue) {
                                         setState(() {
                                           // wheelController.resetAnimation();
-                                          clockwise = newValue;
+                                          _clockwise = newValue;
                                         });
                                         settings.changeDirectionRoll(newValue);
                                       },
