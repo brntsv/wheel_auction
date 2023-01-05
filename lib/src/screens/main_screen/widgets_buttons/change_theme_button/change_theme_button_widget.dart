@@ -13,10 +13,9 @@ class ChangeThemeButtonWidget extends StatefulWidget {
 class _ChangeThemeButtonWidgetState extends State<ChangeThemeButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = context.read<ThemeProvider>();
+    var isDark = context.read<ThemeProvider>().isDarkMode;
     final provider = context.watch<ThemeProvider>();
 
-    var isDark = themeProvider.isDarkMode;
     return IconButton(
       onPressed: () {
         final newMode = !isDark;
