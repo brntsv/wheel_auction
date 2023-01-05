@@ -7,7 +7,7 @@ class Settings {
   Settings({required this.isSwitched, required this.currentSliderValue});
 }
 
-class SettingsDataProvider {
+class SettingsDataSaver {
   final sharedPreferences = SharedPreferences.getInstance();
 
   Future<Settings> loadValue() async {
