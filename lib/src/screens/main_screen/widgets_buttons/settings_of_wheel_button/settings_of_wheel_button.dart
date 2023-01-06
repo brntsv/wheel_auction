@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wheel_auction/src/screens/main_screen/wheel/painter/constants.dart';
 import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/settings_of_wheel_button/model/settings_of_wheel_model.dart';
 import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/settings_of_wheel_button/settings_data_saver.dart';
 import 'package:wheel_auction/src/screens/settings_of_chosen_screen/settings_of_chosen_wheel.dart';
@@ -236,16 +237,72 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                     Switch(
                                       value: _clockwise,
                                       onChanged: (bool newValue) {
-                                        setState(() {
-                                          // wheelController.resetAnimation();
-                                          _clockwise = newValue;
-                                        });
+                                        setState(() => _clockwise = newValue);
                                         settings.changeDirectionRoll(newValue);
                                       },
                                     ),
                                   ],
                                 ),
                               ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          // height: 125,
+                          child: Card(
+                            color: theme.cardColor,
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Column(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 20,
+                                        top: 15,
+                                      ),
+                                      child: Text(
+                                        'Гифка',
+                                        style: AppTextStyle.cardSettingsWheel,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal: 5,
+                                      ),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: ListView.separated(
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.horizontal,
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          itemCount:
+                                              CenterGifWidget.gifs.length,
+                                          itemBuilder: (context, index) {
+                                            return Image.asset(
+                                              CenterGifWidget.gifs[index],
+                                              height: 60,
+                                              width: 60,
+                                            );
+                                          },
+                                          separatorBuilder: (context, index) {
+                                            return const SizedBox(width: 10);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
