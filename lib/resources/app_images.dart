@@ -17,7 +17,6 @@ class AppImages {
   static const String yellowboyAngry = 'assets/images/yellowboy_angry.webp';
   static const String yellowboyCringe = 'assets/images/yellowboy_cringe.webp';
   static const String yellowboyNamaz = 'assets/images/yellowboy_namaz.webp';
-
   static const String dovolen = 'assets/images/dovolen.png';
   static const String praden = 'assets/images/praden.png';
 }
