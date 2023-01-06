@@ -19,7 +19,7 @@ class SettingsDataSaver {
     final isSwitched =
         (await sharedPreferences).getBool('is_switched') ?? false;
     final currentSliderValue =
-        (await sharedPreferences).getDouble('current_slider_value') ?? 20.0;
+        (await sharedPreferences).getDouble('current_slider_value') ?? 5.0;
     final clockwise = (await sharedPreferences).getBool('clockwise') ?? false;
     return Settings(
       isSwitched: isSwitched,

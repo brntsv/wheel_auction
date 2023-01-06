@@ -14,7 +14,7 @@ class SettingsOfWheelButton extends StatefulWidget {
 
 class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
   bool _isSwitched = false;
-  double _currentSliderValue = 20;
+  double _currentSliderValue = 5;
   bool _clockwise = false;
   final _servicePreferences = SettingsDataSaver();
 
@@ -156,10 +156,12 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                                     divisions: 60,
                                     label:
                                         _currentSliderValue.round().toString(),
-                                    onChanged: (double value) {
+                                    onChanged: (newValue) {
                                       setState(() {
-                                        _currentSliderValue = value;
+                                        _currentSliderValue = newValue;
                                       });
+                                      settings.changeDuration(
+                                          Duration(seconds: newValue.toInt()));
                                       _saveValue();
                                     },
                                     activeColor: theme.toggleableActiveColor,
