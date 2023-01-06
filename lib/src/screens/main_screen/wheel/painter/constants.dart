@@ -21,17 +21,17 @@ class Default {
 
 class CenterGifWidget {
   static List<String> get gifs => const <String>[
-        AppImages.whiteCat,
+        AppImages.hesus,
         AppImages.pepegaCoolman,
-        AppImages.pepegaSad,
-        AppImages.papich,
+        AppImages.whiteCat,
         AppImages.punch,
+        AppImages.papich,
         AppImages.jillette,
+        AppImages.pepegaSad,
         AppImages.pepegaBusiness,
         AppImages.pepegaEyes,
         AppImages.clap,
         AppImages.duck,
-        AppImages.hesus,
         AppImages.yellowboyAngry,
         AppImages.yellowboyCringe,
         AppImages.yellowboyNamaz,
