@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_controller.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_group.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/wheel_style.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/settings_of_wheel_button/model/settings_of_wheel_model.dart';
 import 'package:wheel_auction/src/theme/app_theme.dart';
 
 class WheelWidget extends StatefulWidget {
@@ -26,7 +26,7 @@ class _WheelWidgetState extends State<WheelWidget>
 
   late WheelController wheelController;
 
-  StreamController streamController = StreamController<String>();
+  // StreamController streamController = StreamController<String>();
 
   // bool _clockwise = true;
 
@@ -80,32 +80,25 @@ class _WheelWidgetState extends State<WheelWidget>
     });
   }
 
+  int _randomizerRotateCircles() {
+    final events = context.read<ListOfWheelsModel>().events;
+    final countSectors = events.isNotEmpty ? events.first.length : 10;
+    final selectedSeconds =
+        context.read<SettingsOfWheelModel>().selectedSeconds;
+
+    return _random.nextInt(selectedSeconds.inSeconds) + countSectors * 2;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final events = context.read<ListOfWheelsModel>().events;
     final countSectors = events.isNotEmpty ? events.first.length : 10;
 
+    final settings = context.watch<SettingsOfWheelModel>();
+
     return Column(
       children: [
-        // Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   children: [
-        // const Text(
-        //   'Clockwise: ',
-        //   style: TextStyle(fontSize: 18),
-        // ),
-        // Switch(
-        //   value: _clockwise,
-        //   onChanged: (onChanged) {
-        //     setState(() {
-        //       _controller.resetAnimation();
-        //       _clockwise = !_clockwise;
-        //     });
-        //   },
-        // ),
-        //   ],
-        // ),
         Padding(
           padding: const EdgeInsets.only(
             left: 20,
@@ -117,11 +110,10 @@ class _WheelWidgetState extends State<WheelWidget>
         ElevatedButton(
           onPressed: () {
             wheelController.rollTo(
-              events.isNotEmpty ? countSectors ~/ 2 : 0,
-              _random.nextInt(countSectors) + countSectors ~/ 2,
-
-              // TODO провайдером передать из настроек
-              // clockwise: _clockwise,
+              targetIndex: events.isNotEmpty ? countSectors ~/ 2 : 0,
+              minRotateCircles: _randomizerRotateCircles(),
+              duration: settings.selectedSeconds,
+              clockwise: settings.clockwise,
               offset: _random.nextDouble() * pi * 2,
             );
             // streamController.sink.addStream(stream);

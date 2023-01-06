@@ -61,9 +61,9 @@ class WheelController with ChangeNotifier {
   /// Укажите [curve] для обновления кривой анимации.
   /// Укажите [offset] для положения остановки рулетки, по умолчанию 0 указывает на начало детали.
 
-  Future<void> rollTo(
-    int targetIndex,
-    int minRotateCircles, {
+  Future<void> rollTo({
+    int targetIndex = 0,
+    int minRotateCircles = defaultMinRotateCircles,
     Duration duration = defaultDuration,
     bool clockwise = true,
     Curve? curve = Curves.fastOutSlowIn,
