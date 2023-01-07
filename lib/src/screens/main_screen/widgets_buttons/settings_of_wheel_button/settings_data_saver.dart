@@ -4,7 +4,6 @@ class Settings {
   final bool isSwitched;
   final double currentSliderValue;
   final bool clockwise;
-
   Settings({
     required this.isSwitched,
     required this.currentSliderValue,
@@ -28,16 +27,16 @@ class SettingsDataSaver {
     );
   }
 
-  Future<void> saveToggleValue(Settings toggle) async {
-    (await sharedPreferences).setBool('is_switched', toggle.isSwitched);
+  Future<void> saveToggleValue(bool isSwitched) async {
+    (await sharedPreferences).setBool('is_switched', isSwitched);
   }
 
-  Future<void> saveSliderValue(Settings slider) async {
+  Future<void> saveSliderValue(double currentSliderValue) async {
     (await sharedPreferences)
-        .setDouble('current_slider_value', slider.currentSliderValue);
+        .setDouble('current_slider_value', currentSliderValue);
   }
 
-  Future<void> saveClockwise(Settings toggle) async {
-    (await sharedPreferences).setBool('clockwise', toggle.clockwise);
+  Future<void> saveClockwise(bool clockwise) async {
+    (await sharedPreferences).setBool('clockwise', clockwise);
   }
 }

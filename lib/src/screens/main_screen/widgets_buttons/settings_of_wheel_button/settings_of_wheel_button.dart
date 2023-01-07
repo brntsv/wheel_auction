@@ -14,40 +14,6 @@ class SettingsOfWheelButton extends StatefulWidget {
 }
 
 class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
-  bool _isSwitched = false;
-  double _currentSliderValue = 5;
-  bool _clockwise = false;
-  final _servicePreferences = SettingsDataSaver();
-
-  // late WheelController wheelController;
-  // bool _clockwise = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _getValue();
-  }
-
-  void _getValue() async {
-    final settings = await _servicePreferences.loadValue();
-    setState(() {
-      _isSwitched = settings.isSwitched;
-      _currentSliderValue = settings.currentSliderValue;
-      _clockwise = settings.clockwise;
-    });
-  }
-
-  void _saveValue() {
-    final newSettings = Settings(
-      isSwitched: _isSwitched,
-      currentSliderValue: _currentSliderValue,
-      clockwise: _clockwise,
-    );
-    _servicePreferences.saveToggleValue(newSettings);
-    _servicePreferences.saveSliderValue(newSettings);
-    _servicePreferences.saveClockwise(newSettings);
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -116,6 +82,21 @@ class _EliminateModeWidget extends StatefulWidget {
 bool _isSwitched = false;
 
 class __EliminateModeWidgetState extends State<_EliminateModeWidget> {
+  final _servicePreferences = SettingsDataSaver();
+
+  @override
+  void initState() {
+    super.initState();
+    _getValue();
+  }
+
+  void _getValue() async {
+    final settings = await _servicePreferences.loadValue();
+    setState(() => _isSwitched = settings.isSwitched);
+  }
+
+  void _saveValue() => _servicePreferences.saveToggleValue(_isSwitched);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -153,10 +134,8 @@ class __EliminateModeWidgetState extends State<_EliminateModeWidget> {
                 Switch(
                   value: _isSwitched,
                   onChanged: (newValue) {
-                    setState(() {
-                      _isSwitched = !_isSwitched;
-                    });
-                    // _saveValue();
+                    setState(() => _isSwitched = !_isSwitched);
+                    _saveValue();
                   },
                   activeTrackColor: theme.toggleableActiveColor,
                 ),
@@ -180,6 +159,21 @@ class _ChangeDurationRollWidget extends StatefulWidget {
 double _currentSliderValue = 5;
 
 class __ChangeDurationRollWidgetState extends State<_ChangeDurationRollWidget> {
+  final _servicePreferences = SettingsDataSaver();
+
+  @override
+  void initState() {
+    super.initState();
+    _getValue();
+  }
+
+  void _getValue() async {
+    final settings = await _servicePreferences.loadValue();
+    setState(() => _currentSliderValue = settings.currentSliderValue);
+  }
+
+  void _saveValue() => _servicePreferences.saveSliderValue(_currentSliderValue);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -218,7 +212,7 @@ class __ChangeDurationRollWidgetState extends State<_ChangeDurationRollWidget> {
                     _currentSliderValue = newValue;
                   });
                   settings.changeDuration(Duration(seconds: newValue.toInt()));
-                  // _saveValue();
+                  _saveValue();
                 },
                 activeColor: theme.toggleableActiveColor,
                 thumbColor: theme.toggleableActiveColor,
@@ -288,6 +282,21 @@ bool _clockwise = false;
 
 class __ChangeDirectionRollWidgetState
     extends State<_ChangeDirectionRollWidget> {
+  final _servicePreferences = SettingsDataSaver();
+
+  @override
+  void initState() {
+    super.initState();
+    _getValue();
+  }
+
+  void _getValue() async {
+    final settings = await _servicePreferences.loadValue();
+    setState(() => _clockwise = settings.clockwise);
+  }
+
+  void _saveValue() => _servicePreferences.saveClockwise(_clockwise);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -328,6 +337,7 @@ class __ChangeDirectionRollWidgetState
                   onChanged: (bool newValue) {
                     setState(() => _clockwise = newValue);
                     settings.changeDirectionRoll(newValue);
+                    _saveValue();
                   },
                 ),
               ],
