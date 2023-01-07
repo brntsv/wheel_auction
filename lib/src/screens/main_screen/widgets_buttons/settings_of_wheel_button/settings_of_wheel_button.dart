@@ -247,65 +247,7 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          // height: 125,
-                          child: Card(
-                            color: theme.cardColor,
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Column(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 20,
-                                        top: 15,
-                                      ),
-                                      child: Text(
-                                        'Гифка',
-                                        style: AppTextStyle.cardSettingsWheel,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 10,
-                                        horizontal: 5,
-                                      ),
-                                      child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: ListView.separated(
-                                          primary: false,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          itemCount:
-                                              CenterGifWidget.gifs.length,
-                                          itemBuilder: (context, index) {
-                                            return Image.asset(
-                                              CenterGifWidget.gifs[index],
-                                              height: 60,
-                                              width: 60,
-                                            );
-                                          },
-                                          separatorBuilder: (context, index) {
-                                            return const SizedBox(width: 10);
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        _GifChooserWidget(),
                         SizedBox(
                           width: double.infinity,
                           height: 55,
@@ -357,6 +299,83 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
         );
       },
       icon: const Icon(Icons.menu_sharp),
+    );
+  }
+}
+
+class _GifChooserWidget extends StatefulWidget {
+  const _GifChooserWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_GifChooserWidget> createState() => _GifChooserWidgetState();
+}
+
+class _GifChooserWidgetState extends State<_GifChooserWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final settings = context.watch<SettingsOfWheelModel>();
+
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        color: theme.cardColor,
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 20,
+                    top: 15,
+                  ),
+                  child: Text(
+                    'Гифка',
+                    style: AppTextStyle.cardSettingsWheel,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 10,
+                  ),
+                  child: SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: CenterGifWidget.gifs.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          child: Image.asset(
+                            CenterGifWidget.gifs[index],
+                            height: 60,
+                            width: 60,
+                          ),
+                          onTap: () {
+                            settings
+                                .changeGifCenter(CenterGifWidget.gifs[index]);
+                          },
+                        );
+                      },
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1, mainAxisSpacing: 10),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
