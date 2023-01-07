@@ -51,7 +51,6 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final settings = context.watch<SettingsOfWheelModel>();
 
     return IconButton(
       onPressed: () {
@@ -78,177 +77,13 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                         horizontal: 16, vertical: 24),
                     elevation: 0,
                     child: Column(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: Card(
-                            color: theme.cardColor,
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(15),
-                              splashColor: Colors.white.withAlpha(30),
-                              onTap: () {
-                                setState(() {
-                                  if (_isSwitched == true) {
-                                    _isSwitched = false;
-                                  } else if (_isSwitched == false) {
-                                    _isSwitched = true;
-                                  }
-                                });
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 5),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      'Режим на выбывание',
-                                      style: AppTextStyle.cardSettingsWheel,
-                                      overflow: TextOverflow.fade,
-                                    ),
-                                    const Spacer(),
-                                    Switch(
-                                      value: _isSwitched,
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          _isSwitched = !_isSwitched;
-                                        });
-                                        _saveValue();
-                                      },
-                                      activeTrackColor:
-                                          theme.toggleableActiveColor,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 100,
-                          child: Card(
-                            color: theme.cardColor,
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 5, top: 20),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Text(
-                                        'Длительность вращения',
-                                        style: AppTextStyle.cardSettingsWheel,
-                                        overflow: TextOverflow.fade,
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  ),
-                                  Slider(
-                                    value: _currentSliderValue,
-                                    max: 60,
-                                    divisions: 60,
-                                    label:
-                                        _currentSliderValue.round().toString(),
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _currentSliderValue = newValue;
-                                      });
-                                      settings.changeDuration(
-                                          Duration(seconds: newValue.toInt()));
-                                      _saveValue();
-                                    },
-                                    activeColor: theme.toggleableActiveColor,
-                                    thumbColor: theme.toggleableActiveColor,
-                                    inactiveColor: theme.primaryColorDark,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 100,
-                          child: Card(
-                            color: theme.cardColor,
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 5, top: 20),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Text(
-                                        'Стиль колеса',
-                                        style: AppTextStyle.cardSettingsWheel,
-                                        overflow: TextOverflow.fade,
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Card(
-                            color: theme.cardColor,
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(15),
-                              splashColor: Colors.white.withAlpha(30),
-                              onTap: () {
-                                setState(() {
-                                  if (_clockwise == true) {
-                                    _clockwise = false;
-                                  } else if (_clockwise == false) {
-                                    _clockwise = true;
-                                  }
-                                });
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 5),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      'Смена направления',
-                                      style: AppTextStyle.cardSettingsWheel,
-                                      overflow: TextOverflow.fade,
-                                    ),
-                                    const Spacer(),
-                                    Switch(
-                                      value: _clockwise,
-                                      onChanged: (bool newValue) {
-                                        setState(() => _clockwise = newValue);
-                                        settings.changeDirectionRoll(newValue);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const _GifPickerWidget(),
-                        const _EditWheelButtonWidget(),
+                      children: const [
+                        _EliminateModeWidget(),
+                        _ChangeDurationRollWidget(),
+                        _WheelStyleChangeWidget(),
+                        _ChangeDirectionRollWidget(),
+                        _GifPickerWidget(),
+                        _EditWheelButtonWidget(),
                       ],
                     ),
                   ),
@@ -267,6 +102,239 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
         );
       },
       icon: const Icon(Icons.menu_sharp),
+    );
+  }
+}
+
+class _EliminateModeWidget extends StatefulWidget {
+  const _EliminateModeWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_EliminateModeWidget> createState() => __EliminateModeWidgetState();
+}
+
+bool _isSwitched = false;
+
+class __EliminateModeWidgetState extends State<_EliminateModeWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        color: theme.cardColor,
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          splashColor: Colors.white.withAlpha(30),
+          onTap: () {
+            setState(() {
+              if (_isSwitched == true) {
+                _isSwitched = false;
+              } else if (_isSwitched == false) {
+                _isSwitched = true;
+              }
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 5),
+            child: Row(
+              children: [
+                const Text(
+                  'Режим на выбывание',
+                  style: AppTextStyle.cardSettingsWheel,
+                  overflow: TextOverflow.fade,
+                ),
+                const Spacer(),
+                Switch(
+                  value: _isSwitched,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _isSwitched = !_isSwitched;
+                    });
+                    // _saveValue();
+                  },
+                  activeTrackColor: theme.toggleableActiveColor,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChangeDurationRollWidget extends StatefulWidget {
+  const _ChangeDurationRollWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_ChangeDurationRollWidget> createState() =>
+      __ChangeDurationRollWidgetState();
+}
+
+double _currentSliderValue = 5;
+
+class __ChangeDurationRollWidgetState extends State<_ChangeDurationRollWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final settings = context.watch<SettingsOfWheelModel>();
+
+    return SizedBox(
+      width: double.infinity,
+      height: 100,
+      child: Card(
+        color: theme.cardColor,
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 5, top: 20),
+          child: Column(
+            children: [
+              Row(
+                children: const [
+                  Text(
+                    'Длительность вращения',
+                    style: AppTextStyle.cardSettingsWheel,
+                    overflow: TextOverflow.fade,
+                  ),
+                  Spacer(),
+                ],
+              ),
+              Slider(
+                value: _currentSliderValue,
+                max: 60,
+                divisions: 60,
+                label: _currentSliderValue.round().toString(),
+                onChanged: (newValue) {
+                  setState(() {
+                    _currentSliderValue = newValue;
+                  });
+                  settings.changeDuration(Duration(seconds: newValue.toInt()));
+                  // _saveValue();
+                },
+                activeColor: theme.toggleableActiveColor,
+                thumbColor: theme.toggleableActiveColor,
+                inactiveColor: theme.primaryColorDark,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _WheelStyleChangeWidget extends StatefulWidget {
+  const _WheelStyleChangeWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_WheelStyleChangeWidget> createState() =>
+      _WheelStyleChangeWidgetState();
+}
+
+class _WheelStyleChangeWidgetState extends State<_WheelStyleChangeWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SizedBox(
+      width: double.infinity,
+      height: 100,
+      child: Card(
+        color: theme.cardColor,
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 5, top: 20),
+          child: Column(
+            children: [
+              Row(
+                children: const [
+                  Text(
+                    'Стиль колеса',
+                    style: AppTextStyle.cardSettingsWheel,
+                    overflow: TextOverflow.fade,
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChangeDirectionRollWidget extends StatefulWidget {
+  const _ChangeDirectionRollWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_ChangeDirectionRollWidget> createState() =>
+      __ChangeDirectionRollWidgetState();
+}
+
+bool _clockwise = false;
+
+class __ChangeDirectionRollWidgetState
+    extends State<_ChangeDirectionRollWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final settings = context.watch<SettingsOfWheelModel>();
+
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        color: theme.cardColor,
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          splashColor: Colors.white.withAlpha(30),
+          onTap: () {
+            setState(() {
+              if (_clockwise == true) {
+                _clockwise = false;
+              } else if (_clockwise == false) {
+                _clockwise = true;
+              }
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 5),
+            child: Row(
+              children: [
+                const Text(
+                  'Смена направления',
+                  style: AppTextStyle.cardSettingsWheel,
+                  overflow: TextOverflow.fade,
+                ),
+                const Spacer(),
+                Switch(
+                  value: _clockwise,
+                  onChanged: (bool newValue) {
+                    setState(() => _clockwise = newValue);
+                    settings.changeDirectionRoll(newValue);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
