@@ -247,40 +247,8 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
                             ),
                           ),
                         ),
-                        _GifChooserWidget(),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 55,
-                          child: Card(
-                            color: theme.cardColor,
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(15),
-                              onTap: () {
-                                Navigator.restorablePushNamed(
-                                    context, SettingsOfChosenWheel.routeName);
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 5),
-                                child: Row(
-                                  children: const [
-                                    Text(
-                                      'Редактировать колесо',
-                                      style: AppTextStyle.cardSettingsWheel,
-                                      overflow: TextOverflow.fade,
-                                    ),
-                                    Spacer(),
-                                    Icon(Icons.keyboard_arrow_right)
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        const _GifPickerWidget(),
+                        const _EditWheelButtonWidget(),
                       ],
                     ),
                   ),
@@ -303,14 +271,14 @@ class _SettingsOfWheelButtonState extends State<SettingsOfWheelButton> {
   }
 }
 
-class _GifChooserWidget extends StatefulWidget {
-  const _GifChooserWidget({Key? key}) : super(key: key);
+class _GifPickerWidget extends StatefulWidget {
+  const _GifPickerWidget({Key? key}) : super(key: key);
 
   @override
-  State<_GifChooserWidget> createState() => _GifChooserWidgetState();
+  State<_GifPickerWidget> createState() => _GifPickerWidgetState();
 }
 
-class _GifChooserWidgetState extends State<_GifChooserWidget> {
+class _GifPickerWidgetState extends State<_GifPickerWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -374,6 +342,48 @@ class _GifChooserWidgetState extends State<_GifChooserWidget> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EditWheelButtonWidget extends StatelessWidget {
+  const _EditWheelButtonWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SizedBox(
+      width: double.infinity,
+      height: 55,
+      child: Card(
+        color: theme.cardColor,
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          onTap: () {
+            Navigator.restorablePushNamed(
+                context, SettingsOfChosenWheel.routeName);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 5),
+            child: Row(
+              children: const [
+                Text(
+                  'Редактировать колесо',
+                  style: AppTextStyle.cardSettingsWheel,
+                  overflow: TextOverflow.fade,
+                ),
+                Spacer(),
+                Icon(Icons.keyboard_arrow_right)
+              ],
+            ),
+          ),
         ),
       ),
     );
