@@ -4,9 +4,11 @@
     <item android:drawable="?android:colorBackground" />
 
     <!-- You can insert your own image assets here -->
-    <!-- <item>
+    <item>
         <bitmap
+            android:right="0dp"
+            android:left="0dp"
             android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
+            android:src="@drawable/wheel_logo" />
+    </item>
 </layer-list>
