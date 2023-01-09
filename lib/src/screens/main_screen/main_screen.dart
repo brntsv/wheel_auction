@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wheel_auction/src/screens/add_wheel_screen/add_wheel_screen.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/listener_event_widget.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/wheel_widget.dart';
 import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/change_theme_button/change_theme_button_widget.dart';
 import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/list_of_wheels_button/list_of_wheels_button.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/settings_of_wheel_button/model/settings_of_wheel_model.dart';
+import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/settings_of_wheel_button/settings_data_saver.dart';
 import 'package:wheel_auction/src/screens/main_screen/widgets_buttons/settings_of_wheel_button/settings_of_wheel_button.dart';
 
 class MainScreen extends StatelessWidget {
@@ -64,8 +67,42 @@ class _TopWidget extends StatelessWidget {
   }
 }
 
-class _CenterWidget extends StatelessWidget {
+class _CenterWidget extends StatefulWidget {
   const _CenterWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_CenterWidget> createState() => _CenterWidgetState();
+}
+
+String _gif = '';
+bool _clockwise = false;
+double _currentSliderValue = 5;
+
+class _CenterWidgetState extends State<_CenterWidget> {
+  final _servicePreferences = SettingsDataSaver();
+
+  @override
+  void initState() {
+    super.initState();
+    _getValue();
+  }
+
+  void _getValue() async {
+    final settings = await _servicePreferences.loadValue();
+    setState(() {
+      _currentSliderValue = settings.currentSliderValue;
+      _clockwise = settings.clockwise;
+      _gif = settings.gif;
+    });
+    Future.delayed(Duration.zero, () async {
+      final model = context.read<SettingsOfWheelModel>();
+
+      model.changeDuration(Duration(seconds: _currentSliderValue.toInt()));
+      model.changeDirectionRoll(_clockwise);
+      model.changeGifCenter(_gif);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
