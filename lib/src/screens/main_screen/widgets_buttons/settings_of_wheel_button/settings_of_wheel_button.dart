@@ -120,6 +120,7 @@ class __EliminateModeWidgetState extends State<_EliminateModeWidget> {
                 _isSwitched = true;
               }
             });
+            _saveValue();
           },
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 5),
@@ -134,7 +135,7 @@ class __EliminateModeWidgetState extends State<_EliminateModeWidget> {
                 Switch(
                   value: _isSwitched,
                   onChanged: (newValue) {
-                    setState(() => _isSwitched = !_isSwitched);
+                    setState(() => _isSwitched = newValue);
                     _saveValue();
                   },
                   activeTrackColor: theme.toggleableActiveColor,
@@ -204,13 +205,12 @@ class __ChangeDurationRollWidgetState extends State<_ChangeDurationRollWidget> {
               ),
               Slider(
                 value: _currentSliderValue,
+                min: 1,
                 max: 60,
                 divisions: 60,
                 label: _currentSliderValue.round().toString(),
                 onChanged: (newValue) {
-                  setState(() {
-                    _currentSliderValue = newValue;
-                  });
+                  setState(() => _currentSliderValue = newValue);
                   settings.changeDuration(Duration(seconds: newValue.toInt()));
                   _saveValue();
                 },
@@ -321,6 +321,8 @@ class __ChangeDirectionRollWidgetState
                 _clockwise = true;
               }
             });
+            settings.changeDirectionRoll(_clockwise);
+            _saveValue();
           },
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 5),
@@ -335,7 +337,9 @@ class __ChangeDirectionRollWidgetState
                 Switch(
                   value: _clockwise,
                   onChanged: (bool newValue) {
-                    setState(() => _clockwise = newValue);
+                    setState(() {
+                      _clockwise = newValue;
+                    });
                     settings.changeDirectionRoll(newValue);
                     _saveValue();
                   },
@@ -356,7 +360,24 @@ class _GifPickerWidget extends StatefulWidget {
   State<_GifPickerWidget> createState() => _GifPickerWidgetState();
 }
 
+String _gif = '';
+
 class _GifPickerWidgetState extends State<_GifPickerWidget> {
+  final _servicePreferences = SettingsDataSaver();
+
+  @override
+  void initState() {
+    super.initState();
+    _getValue();
+  }
+
+  void _getValue() async {
+    final settings = await _servicePreferences.loadValue();
+    setState(() => _gif = settings.gif);
+  }
+
+  void _saveValue() => _servicePreferences.saveGif(_gif);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -399,15 +420,17 @@ class _GifPickerWidgetState extends State<_GifPickerWidget> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: CenterGifWidget.gifs.length,
                       itemBuilder: (context, index) {
-                        return GestureDetector(
+                        return InkWell(
                           child: Image.asset(
                             CenterGifWidget.gifs[index],
                             height: 60,
                             width: 60,
                           ),
                           onTap: () {
+                            setState(() => _gif = CenterGifWidget.gifs[index]);
                             settings
                                 .changeGifCenter(CenterGifWidget.gifs[index]);
+                            _saveValue();
                           },
                         );
                       },
