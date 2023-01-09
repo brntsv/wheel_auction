@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wheel_auction/resources/app_images.dart';
 import 'package:wheel_auction/src/screens/add_wheel_screen/model/list_of_wheels_model.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/arrow.dart';
 import 'package:wheel_auction/src/screens/main_screen/wheel/painter/constants.dart';
@@ -152,6 +151,7 @@ class MyWheel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final selectedGif = context.watch<SettingsOfWheelModel>().selectedGif;
 
     return Stack(
       children: [
@@ -170,12 +170,12 @@ class MyWheel extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: Arrow(),
         ),
-        const Positioned.fill(
+        Positioned.fill(
           child: Align(
             alignment: Alignment.center,
             child: CircleAvatar(
               backgroundColor: AppColors.transparent,
-              foregroundImage: AssetImage(AppImages.hesus),
+              foregroundImage: AssetImage(selectedGif),
               maxRadius: 35,
             ),
           ),
