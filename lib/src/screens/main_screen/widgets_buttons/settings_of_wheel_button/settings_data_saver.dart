@@ -4,10 +4,12 @@ class Settings {
   final bool isSwitched;
   final double currentSliderValue;
   final bool clockwise;
+  final String gif;
   Settings({
     required this.isSwitched,
     required this.currentSliderValue,
     required this.clockwise,
+    required this.gif,
   });
 }
 
@@ -20,10 +22,12 @@ class SettingsDataSaver {
     final currentSliderValue =
         (await sharedPreferences).getDouble('current_slider_value') ?? 5.0;
     final clockwise = (await sharedPreferences).getBool('clockwise') ?? false;
+    final gif = (await sharedPreferences).getString('gif') ?? '';
     return Settings(
       isSwitched: isSwitched,
       currentSliderValue: currentSliderValue,
       clockwise: clockwise,
+      gif: gif,
     );
   }
 
@@ -38,5 +42,9 @@ class SettingsDataSaver {
 
   Future<void> saveClockwise(bool clockwise) async {
     (await sharedPreferences).setBool('clockwise', clockwise);
+  }
+
+  Future<void> saveGif(String gif) async {
+    (await sharedPreferences).setString('gif', gif);
   }
 }
