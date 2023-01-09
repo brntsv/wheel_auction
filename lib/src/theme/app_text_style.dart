@@ -60,6 +60,15 @@ abstract class AppTextStyle {
     letterSpacing: 2,
   );
 
+  static const buttonWeightText = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    fontStyle: FontStyle.normal,
+    fontFamily: AppFonts.robotoLight,
+    height: 1.25,
+    letterSpacing: 2,
+  );
+
   static const hintInputText = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w300,

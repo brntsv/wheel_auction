@@ -95,11 +95,11 @@ class _CenterWidgetState extends State<_CenterWidget> {
       _gif = settings.gif;
     });
     Future.delayed(Duration.zero, () async {
-      final model = context.read<SettingsOfWheelModel>();
+      final settings = context.read<SettingsOfWheelModel>();
 
-      model.changeDuration(Duration(seconds: _currentSliderValue.toInt()));
-      model.changeDirectionRoll(_clockwise);
-      model.changeGifCenter(_gif);
+      settings.changeDuration(Duration(seconds: _currentSliderValue.toInt()));
+      settings.changeDirectionRoll(_clockwise);
+      settings.changeGifCenter(_gif);
     });
   }
 
