@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wheel_auction/src/screens/add_wheel_screen/model/list_of_wheels_model.dart';
 import 'package:wheel_auction/src/screens/global_settings_screen/global_settings_screen.dart';
 import 'package:wheel_auction/src/theme/app_text_style.dart';
+import 'package:wheel_auction/src/theme/app_theme.dart';
 
 class AddWheelScreen extends StatefulWidget {
   const AddWheelScreen({Key? key}) : super(key: key);
@@ -244,48 +247,57 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                         begin: const Offset(-1.0, 0.0),
                         end: const Offset(0.0, 0.0),
                       )),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        // !!!!!!!!
-                        child: TextFormField(
-                          controller: controllerTextFieldEventsWheel[index],
-                          onSaved: ((newValue) {
-                            listEvents.add(newValue);
-                            listOfWheels.addListOfEvents(listEvents);
-                          }),
-                          // !!!!!!!!!
-                          autofocus: true,
-                          focusNode: _focusNodes[index],
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (value) {
-                            if (_focusNodes.last.hasFocus) {
-                              FocusScope.of(context).unfocus();
-                            } else {
-                              _focusNodes[index + 1].requestFocus();
-                            }
-                          },
-                          style: AppTextStyle.hintInputText,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                onPressed: (() => _removeAtIndex(index)),
-                                icon: const Icon(Icons.delete)),
-                            border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
-                              borderSide: BorderSide(
-                                width: 2,
-                                color: theme.focusColor,
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            // !!!!!!!!
+                            child: TextFormField(
+                              controller: controllerTextFieldEventsWheel[index],
+                              onSaved: ((newValue) {
+                                listEvents.add(newValue);
+                                listOfWheels.addListOfEvents(listEvents);
+                              }),
+                              // !!!!!!!!!
+                              autofocus: true,
+                              focusNode: _focusNodes[index],
+                              textInputAction: TextInputAction.next,
+                              onFieldSubmitted: (value) {
+                                if (_focusNodes.last.hasFocus) {
+                                  FocusScope.of(context).unfocus();
+                                } else {
+                                  _focusNodes[index + 1].requestFocus();
+                                }
+                              },
+                              style: AppTextStyle.hintInputText,
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                    onPressed: (() => _removeAtIndex(index)),
+                                    icon: const Icon(Icons.delete)),
+                                border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15))),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: theme.focusColor,
+                                  ),
+                                ),
+                                hintText: 'Название варианта',
+                                hintStyle: AppTextStyle.hintInputText,
+                                filled: true,
+                                fillColor: theme.primaryColorLight,
                               ),
                             ),
-                            hintText: 'Название варианта',
-                            hintStyle: AppTextStyle.hintInputText,
-                            filled: true,
-                            fillColor: theme.primaryColorLight,
                           ),
-                        ),
+                          const Positioned(
+                            top: 60,
+                            right: 70,
+                            child: _WeightPickerWidget(),
+                          ),
+                        ],
                       ),
                     );
                   }),
@@ -293,6 +305,83 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _WeightPickerWidget extends StatefulWidget {
+  const _WeightPickerWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_WeightPickerWidget> createState() => _WeightPickerWidgetState();
+}
+
+class _WeightPickerWidgetState extends State<_WeightPickerWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    const double kItemExtent = 32.0;
+    int selectedValue = 0;
+    const List<String> weights = <String>[
+      'x1',
+      'x2',
+      'x3',
+      'x4',
+      'x5',
+      'x6',
+      'x7',
+      'x8',
+      'x9',
+      'x10',
+    ];
+
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 0.75, sigmaY: 0.75),
+        child: ElevatedButton(
+          onPressed: () {
+            showCupertinoModalPopup<void>(
+              context: context,
+              builder: (_) => SizedBox(
+                width: double.infinity,
+                height: 300,
+                child: CupertinoPicker(
+                  magnification: 1.22,
+                  squeeze: 1.2,
+                  useMagnifier: true,
+                  itemExtent: kItemExtent,
+                  onSelectedItemChanged: (int selectedItem) {
+                    setState(() {
+                      selectedValue = selectedItem;
+                    });
+                  },
+                  children: List<Widget>.generate(weights.length, (int index) {
+                    return Center(
+                      child: Text(
+                        weights[index],
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            );
+          },
+          style: ButtonStyle(
+            elevation: const MaterialStatePropertyAll(0.2),
+            backgroundColor: MaterialStatePropertyAll(
+                theme.primaryColorLight.withOpacity(0.85)),
+            side: MaterialStatePropertyAll(BorderSide(
+              width: 1.0,
+              color: theme.dividerColor.withAlpha(150),
+            )),
+            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(13))),
+          ),
+          child: Text(weights[selectedValue],
+              style: AppTextStyle.buttonWeightText
+                  .copyWith(color: theme.hintColor)),
         ),
       ),
     );
