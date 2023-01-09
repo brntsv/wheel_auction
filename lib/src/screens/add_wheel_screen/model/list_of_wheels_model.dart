@@ -13,6 +13,12 @@ class ListOfWheelsModel with ChangeNotifier {
   /// представление событий колес.
   List<List<String?>> get events => _listEvents;
 
+  /// Внутреннее приватное состояние веса по секторам.
+  final List<List<double?>> _listWeights = [];
+
+  /// представление веса секторов.
+  List<List<double?>> get weights => _listWeights;
+
   /// метод добавления колеса в список колес
   void addNameWheel(String? nameOfWheel) {
     _items.insert(0, nameOfWheel);
@@ -24,100 +30,10 @@ class ListOfWheelsModel with ChangeNotifier {
     _listEvents.insert(0, listOfEvents);
     notifyListeners();
   }
+
+  /// метод добавления веса каждого события
+  void addWeightsOfEvents(List<double?> listOfWeights) {
+    _listWeights.insert(0, listOfWeights);
+    notifyListeners();
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/// Сохранил старые версии пока что
-
-
-// class WheelObject {
-//   final String? nameOfWheel;
-//   final List<String> eventOptions;
-//   WheelObject({
-//     required this.nameOfWheel,
-//     required this.eventOptions,
-//   });
-// }
-
-// class ListOfWheelsModel with ChangeNotifier {
-//   /// Внутреннее приватное состояние колес.
-//   final List<WheelObject> _items = [];
-
-//   /// Неизменяемое представление колес.
-//   List<WheelObject> get wheels => _items;
-
-//   /// метод добавления колеса в список колес
-//   void addWheel(WheelObject item) {
-//     _items.add(item);
-//     notifyListeners();
-//   }
-
-//   /// метод удаления колеса
-//   void removeWheel(WheelObject item) {
-//     _items.remove(item);
-//     notifyListeners();
-//   }
-// }
-
-
-
-/*
-
-   добавление колеса в список колес
-  void addWheel(Wheel titleOfWheel) {
-    _titlesOfWheels.add(titleOfWheel);
-    notifyListeners();
-  }
-
-   удаление колеса из списка колес
-  void deleteWheel(int index) {
-    _titlesOfWheels.removeAt(index);
-    notifyListeners();
-  }
-
-  List<String> list = [];
-
-  void addWheel(String nameWheel) {
-    list.add(nameWheel);
-    notifyListeners();
-  }
-
-  void deleteWheel(int index) {
-    list.removeAt(index);
-    notifyListeners();
-  }
-  */
