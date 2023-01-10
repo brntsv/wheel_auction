@@ -71,6 +71,8 @@ abstract class AppColors {
   static const primaryLight = Color(0xFFEEEEEE);
   static const cardLight = Color(0xFFEEEEEE);
 
+  static const barrier = Color(0x1F000000);
+
   static const colorsWheel = <Color>[
     Color(0xFF00B6AC),
     Color(0xFF4A91AE),

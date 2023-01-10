@@ -318,24 +318,24 @@ class _WeightPickerWidget extends StatefulWidget {
   State<_WeightPickerWidget> createState() => _WeightPickerWidgetState();
 }
 
+int selectedValue = 0;
+const List<String> weights = <String>[
+  'x1',
+  'x2',
+  'x3',
+  'x4',
+  'x5',
+  'x6',
+  'x7',
+  'x8',
+  'x9',
+  'x10',
+];
+
 class _WeightPickerWidgetState extends State<_WeightPickerWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const double kItemExtent = 32.0;
-    int selectedValue = 0;
-    const List<String> weights = <String>[
-      'x1',
-      'x2',
-      'x3',
-      'x4',
-      'x5',
-      'x6',
-      'x7',
-      'x8',
-      'x9',
-      'x10',
-    ];
 
     return ClipRect(
       child: BackdropFilter(
@@ -343,27 +343,32 @@ class _WeightPickerWidgetState extends State<_WeightPickerWidget> {
         child: ElevatedButton(
           onPressed: () {
             showCupertinoModalPopup<void>(
+              barrierColor: AppColors.barrier,
               context: context,
-              builder: (_) => SizedBox(
-                width: double.infinity,
-                height: 300,
-                child: CupertinoPicker(
-                  magnification: 1.22,
-                  squeeze: 1.2,
-                  useMagnifier: true,
-                  itemExtent: kItemExtent,
-                  onSelectedItemChanged: (int selectedItem) {
-                    setState(() {
-                      selectedValue = selectedItem;
-                    });
-                  },
-                  children: List<Widget>.generate(weights.length, (int index) {
-                    return Center(
-                      child: Text(
-                        weights[index],
-                      ),
-                    );
-                  }),
+              builder: (_) => ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 160,
+                    child: CupertinoPicker(
+                      magnification: 1.22,
+                      squeeze: 1.2,
+                      useMagnifier: true,
+                      itemExtent: 35,
+                      onSelectedItemChanged: (int selectedItem) {
+                        setState(() {
+                          selectedValue = selectedItem;
+                        });
+                      },
+                      children:
+                          List<Widget>.generate(weights.length, (int index) {
+                        return Center(
+                          child: Text(weights[index]),
+                        );
+                      }),
+                    ),
+                  ),
                 ),
               ),
             );
