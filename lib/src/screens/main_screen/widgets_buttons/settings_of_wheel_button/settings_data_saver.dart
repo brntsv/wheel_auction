@@ -22,7 +22,8 @@ class SettingsDataSaver {
     final currentSliderValue =
         (await sharedPreferences).getDouble('current_slider_value') ?? 5.0;
     final clockwise = (await sharedPreferences).getBool('clockwise') ?? false;
-    final gif = (await sharedPreferences).getString('gif') ?? '';
+    final gif = (await sharedPreferences).getString('gif') ??
+        'assets/images/white_cat.webp';
     return Settings(
       isSwitched: isSwitched,
       currentSliderValue: currentSliderValue,
