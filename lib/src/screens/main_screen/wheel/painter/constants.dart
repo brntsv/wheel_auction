@@ -17,6 +17,7 @@ class Default {
         'Hey',
         'I`m',
       ];
+  static List<double> get weights => const <double>[1, 1, 1, 1, 1, 1, 1, 1];
 }
 
 class CenterGifWidget {
