@@ -27,8 +27,6 @@ class _WheelWidgetState extends State<WheelWidget>
 
   // StreamController streamController = StreamController<String>();
 
-  // bool _clockwise = true;
-
   // final weight = <double>[
   //   1.0,
   //   1.0,
@@ -38,15 +36,18 @@ class _WheelWidgetState extends State<WheelWidget>
 
   @override
   void initState() {
-    final eventsList = context.read<ListOfWheelsModel>().events;
+    final provider = context.read<ListOfWheelsModel>();
+    final eventsList = provider.events;
     final events = eventsList.isNotEmpty ? eventsList.first : Default.events;
+    final weightList = provider.weights;
+    final weights = weightList.isNotEmpty ? weightList.first : Default.weights;
 
     // инициализация контроллера
     final group = WheelGroup.uniform(
       events.length,
       colorBuilder: AppColors.colorsWheel,
       textBuilder: events.elementAt,
-      // weightBuilder: weight.elementAt,
+      weightBuilder: weights.elementAt,
     );
     wheelController = WheelController(vsync: this, group: group);
     super.initState();
@@ -60,15 +61,20 @@ class _WheelWidgetState extends State<WheelWidget>
 
     provider.addListener(() {
       if (provider.events.isNotEmpty) {
-        wheelController.dispose();
-        final events = provider.events.first;
-        final group = WheelGroup.uniform(
-          events.length,
-          colorBuilder: AppColors.colorsWheel,
-          textBuilder: events.elementAt,
-          // weightBuilder: weight.elementAt,
-        );
-        wheelController = WheelController(vsync: this, group: group);
+        // wheelController.dispose();
+        final events = context.read<ListOfWheelsModel>().events.first;
+        try {
+          final weights = context.read<ListOfWheelsModel>().weights.first;
+          final group = WheelGroup.uniform(
+            events.length,
+            colorBuilder: AppColors.colorsWheel,
+            textBuilder: events.elementAt,
+            weightBuilder: weights.elementAt,
+          );
+          wheelController = WheelController(vsync: this, group: group);
+        } catch (e) {
+          print('No element');
+        }
       } else if (provider.events.isEmpty) {
         return;
       }

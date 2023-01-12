@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -44,6 +45,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
   /// контроллер скролла
   final ScrollController _scrollController = ScrollController();
+
+  final List<double> weight = [];
 
   @override
   void initState() {
@@ -91,6 +94,11 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
       index,
       duration: const Duration(milliseconds: 300),
     );
+    //!!!!!!!!!!!!
+    // weight.addEntries({index: 1.0}.entries);
+    weight.add(1);
+    print(weight);
+    //!!!!!!!!!!!
 
     Timer(
       const Duration(milliseconds: 500),
@@ -113,6 +121,11 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
     controllerTextFieldEventsWheel.removeAt(index);
     _focusNodes.removeAt(index);
     _data.removeAt(index);
+    //!!!!!!!!!!!
+    // weight.remove(index);
+    weight.removeAt(index);
+    print(weight);
+    //!!!!!!!!!!!
     _animKey.currentState?.removeItem(index, (context, animation) {
       return SlideTransition(
         position: animation.drive(Tween<Offset>(
@@ -156,6 +169,8 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                   _formKey.currentState?.save();
 
                   _formListKey.currentState?.save();
+
+                  listOfWheels.addWeightsOfEvents(weight);
 
                   Navigator.of(context).pop();
                 },
@@ -292,10 +307,18 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                               ),
                             ),
                           ),
+                          Positioned(
+                            top: 60,
+                            right: 70,
+                            child: _WeightPickerWidget(
+                              index: index,
+                              weight: weight,
+                            ),
+                          ),
                           const Positioned(
                             top: 60,
                             right: 70,
-                            child: _WeightPickerWidget(),
+                            child: Text(''),
                           ),
                         ],
                       ),
@@ -312,27 +335,36 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 }
 
 class _WeightPickerWidget extends StatefulWidget {
-  const _WeightPickerWidget({Key? key}) : super(key: key);
+  final int index;
+  final List<double> weight;
+
+  const _WeightPickerWidget(
+      {Key? key, required this.index, required this.weight})
+      : super(key: key);
 
   @override
   State<_WeightPickerWidget> createState() => _WeightPickerWidgetState();
 }
 
 int selectedValue = 0;
-const List<String> weights = <String>[
-  'x1',
-  'x2',
-  'x3',
-  'x4',
-  'x5',
-  'x6',
-  'x7',
-  'x8',
-  'x9',
-  'x10',
-];
+List<double> form = [];
+const List<double> weightsInPicker = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 class _WeightPickerWidgetState extends State<_WeightPickerWidget> {
+  void saveWeight(int index, List<double> weight) {
+    // final provider = context.read<ListOfWheelsModel>();
+    if (form.isEmpty) {
+      form.add(weightsInPicker[selectedValue]);
+    } else {
+      form.clear();
+      form.add(weightsInPicker[selectedValue]);
+    }
+    weight.replaceRange(index, index + 1, form);
+    print(weight);
+
+    // provider.addWeightsOfEvents(weight);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -357,14 +389,13 @@ class _WeightPickerWidgetState extends State<_WeightPickerWidget> {
                       useMagnifier: true,
                       itemExtent: 35,
                       onSelectedItemChanged: (int selectedItem) {
-                        setState(() {
-                          selectedValue = selectedItem;
-                        });
+                        selectedValue = selectedItem;
+                        saveWeight(widget.index, widget.weight);
                       },
-                      children:
-                          List<Widget>.generate(weights.length, (int index) {
+                      children: List<Widget>.generate(weightsInPicker.length,
+                          (int index) {
                         return Center(
-                          child: Text(weights[index]),
+                          child: Text(weightsInPicker[index].toString()),
                         );
                       }),
                     ),
@@ -384,7 +415,7 @@ class _WeightPickerWidgetState extends State<_WeightPickerWidget> {
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(13))),
           ),
-          child: Text(weights[selectedValue],
+          child: Text('',
               style: AppTextStyle.buttonWeightText
                   .copyWith(color: theme.hintColor)),
         ),
