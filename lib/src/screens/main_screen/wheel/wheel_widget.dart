@@ -27,13 +27,6 @@ class _WheelWidgetState extends State<WheelWidget>
 
   // StreamController streamController = StreamController<String>();
 
-  // final weight = <double>[
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  //   1.0,
-  // ];
-
   @override
   void initState() {
     final provider = context.read<ListOfWheelsModel>();
@@ -61,7 +54,6 @@ class _WheelWidgetState extends State<WheelWidget>
 
     provider.addListener(() {
       if (provider.events.isNotEmpty) {
-        // wheelController.dispose();
         final events = context.read<ListOfWheelsModel>().events.first;
         try {
           final weights = context.read<ListOfWheelsModel>().weights.first;
