@@ -46,7 +46,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
   /// контроллер скролла
   final ScrollController _scrollController = ScrollController();
 
-  final List<double> weight = [];
+  final List<double> _weight = [];
 
   @override
   void initState() {
@@ -94,11 +94,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
       index,
       duration: const Duration(milliseconds: 300),
     );
-    //!!!!!!!!!!!!
-    // weight.addEntries({index: 1.0}.entries);
-    weight.add(1);
-    print(weight);
-    //!!!!!!!!!!!
+    _weight.add(1);
 
     Timer(
       const Duration(milliseconds: 500),
@@ -121,11 +117,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
     controllerTextFieldEventsWheel.removeAt(index);
     _focusNodes.removeAt(index);
     _data.removeAt(index);
-    //!!!!!!!!!!!
-    // weight.remove(index);
-    weight.removeAt(index);
-    print(weight);
-    //!!!!!!!!!!!
+    _weight.removeAt(index);
     _animKey.currentState?.removeItem(index, (context, animation) {
       return SlideTransition(
         position: animation.drive(Tween<Offset>(
@@ -170,7 +162,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
 
                   _formListKey.currentState?.save();
 
-                  listOfWheels.addWeightsOfEvents(weight);
+                  listOfWheels.addWeightsOfEvents(_weight);
 
                   Navigator.of(context).pop();
                 },
@@ -266,14 +258,12 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(20.0),
-                            // !!!!!!!!
                             child: TextFormField(
                               controller: controllerTextFieldEventsWheel[index],
                               onSaved: ((newValue) {
                                 listEvents.add(newValue);
                                 listOfWheels.addListOfEvents(listEvents);
                               }),
-                              // !!!!!!!!!
                               autofocus: true,
                               focusNode: _focusNodes[index],
                               textInputAction: TextInputAction.next,
@@ -312,7 +302,7 @@ class _AddWheelScreenState extends State<AddWheelScreen> {
                             right: 70,
                             child: _WeightPickerWidget(
                               index: index,
-                              weight: weight,
+                              weight: _weight,
                             ),
                           ),
                           const Positioned(
@@ -352,7 +342,6 @@ const List<double> weightsInPicker = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 class _WeightPickerWidgetState extends State<_WeightPickerWidget> {
   void saveWeight(int index, List<double> weight) {
-    // final provider = context.read<ListOfWheelsModel>();
     if (form.isEmpty) {
       form.add(weightsInPicker[selectedValue]);
     } else {
@@ -360,9 +349,6 @@ class _WeightPickerWidgetState extends State<_WeightPickerWidget> {
       form.add(weightsInPicker[selectedValue]);
     }
     weight.replaceRange(index, index + 1, form);
-    print(weight);
-
-    // provider.addWeightsOfEvents(weight);
   }
 
   @override
